@@ -1,2 +1,2 @@
-# Dissertacao
-Repositório para armazenamento da dissertação de mestrado UTFPR
+# Mestrado
+Repositório para armazenamento de artigos e dissertação de mestrado UTFPR
