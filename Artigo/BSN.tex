@@ -7,6 +7,7 @@
 \usepackage{algpseudocode}
 \usepackage[Algoritmo]{algorithm}
 \usepackage{textgreek}
+\usepackage{float}
 
 %\usepackage[latin1]{inputenc}  
 
@@ -15,7 +16,7 @@
 
 \title{BSN - Uma proposta para reduzir a latência em Redes ópticas para \emph{Smart Grid} e \emph{Smart Cities}}
 
-\author{Daniel A. Oleinik\inst{1}, Mauro S. Fonseca\inst{1}, Anelise Munaretto Fonseca\inst{1}}
+\author{Daniel A. Oleinik\inst{1}, Mauro S. Fonseca\inst{1}, Anelise Munaretto\inst{1}}
 
 
 \address{CPGEI -- Universidade Tecnológica Federal do Paraná (UTFPR)\\
@@ -26,7 +27,7 @@
 %\nextinstitute
   %CPGEI -- Universidade Tecnológica Federal do Paraná (UTFPR)\\
   %CEP 80.230-910 -- Curitiba -- PR -- Brasil
-  \email{daniel.oleinik@outlook.com, maurofonseca@utfpr.edu.br, anelise.munaretto@gmail.com}
+  \email{daniel.oleinik@outlook.com, maurofonseca@utfpr.edu.br, anelise@utfpr.edu.br }
 }
 
 \begin{document} 
@@ -75,19 +76,27 @@ O protocolo STP, definido no IEEE 802.1D, é comumente utilizado por \emph{switc
 
 Os estados possíveis das portas dos equipamentos utilizadas no protocolo STP podem ser: \emph{Blocking, Listening, Learning, Forwarding} ou \emph{Disabled} \cite{Art_Wojdak}. Dessa forma, o protocolo pode garantir que as conexões que causam os \emph{loops} existentes na rede possam deixar de ser utilizadas, mantendo-as como possíveis opções de conexão caso a principal seja perdida.
 
-Este protocolo considera um equipamento da rede como sendo o nó raiz, a partir dele a topologia resultante de rede pode ser obtida ao mesmo tempo que os \emph{loops} são evitados (sendo transformados em rotas alternativas em caso de falha). Como este protocolo é padrão e amplamente difundido, ele também é o protocolo mais utilizado em redes SG reais.
+Este protocolo considera um equipamento da rede como sendo o nó raiz e a partir dele a topologia resultante de rede pode ser obtida ao mesmo tempo que os \emph{loops} são evitados (sendo transformados em rotas alternativas em caso de falha). Como este protocolo é padrão e amplamente difundido, ele também é o protocolo mais utilizado em redes SG reais.
 
 \subsection{Chaveador ótico}
 Apesar das visíveis diferenças entre cabos elétricos e ópticos, pode-se fazer um paralelo entre os dois de maneira satisfatória caso suas particularidades sejam devidamente respeitadas. 
 
-Considerando-se que a transmissão de informação dentro de uma fibra óptica é realizada através da condução da luz dentro do núcleo da mesma, através do fenômeno de Reflexão Interna Total e considerando  também que a fibra óptica funciona como um guia para a luz, pode-se entender que uma fibra óptica, sob circunstâncias controladas (alinhamento, proximidade e características de núcleo), pode enviar sinais a outra fibra. 
+Considerando-se que a transmissão de informação dentro de uma fibra óptica é realizada através da condução da luz dentro do núcleo da mesma, através do fenômeno de Reflexão Interna Total (fenômeno originado na diferença do índice de refração entre o material utilizado
+na fabricação do núcleo da fibra e o utilizado em sua capa envoltória protetora, também chamada de casca \cite{inbook_data_cabling}) conforme representado na Figura \ref{fig_fibra_optica} e considerando  também que a fibra óptica funciona como um guia para a luz, pode-se entender que uma fibra óptica, sob circunstâncias controladas (alinhamento, proximidade e características de núcleo), pode enviar sinais a outra fibra. 
+
+\begin{figure}[ht] % normalmente utilizar [!t]
+	\centering
+	\includegraphics[width=9cm]{fibra_optica}
+	\caption{Representação do fenômeno de reflexão interna total em uma fibra óptica. Fonte: \cite{inbook_data_cabling}}
+	\label{fig_fibra_optica}
+\end{figure}
 
 Desse modo, pode-se imaginar a construção de um relé óptico onde, analogamente a um relé metálico, as fibras de entrada e saída são chaveadas de acordo com um sinal de entrada. Tal equipamento recebe o nome neste documento de chaveador óptico e é representado simplificadamente na Figura \ref{fig_switch_optico}. 
 
 \begin{figure}[ht] % normalmente utilizar [!t]
 	\centering
 	\includegraphics[width=7cm]{Switch_optico}
-	\caption{Diagrama interno simplificado de um chaveador óptico. Em um estado este componente transmite bidirecionalmente a luz da interface A para D e B para C, quando acionado ele transmite bidirecionalmente a luz da interface A para B.}
+	\caption{Diagrama interno simplificado de um chaveador óptico. Em um estado este componente transmite bidirecionalmente a luz da interface A para D e B para C, quando acionado ele transmite bidirecionalmente a luz da interface A para B. Adaptado de \cite{Accelink2014}}
 	\label{fig_switch_optico}
 \end{figure}
 
@@ -118,41 +127,41 @@ Tipicamente existem dois cenários em aplicações SG para distribuição de ene
 	\label{fig_rede_distribuicao}
 \end{figure}
 
-O conceito de SG engloba diversos tipos de serviços, que devem coexistir em uma rede de comunicação de maneira satisfatória visando garantir a correta operação do sistema. Logo, é normal que existam diversas exigências de funcionamento e desempenho. Segundo \cite{Art_Aggarwal2010} pode-se prever nessa rede um elevado número de mensagens devido ao grande número de elementos adicionados à rede. Essas mensagens devem crescer muito mais rapidamente que o número de elementos, visto que devem-se extrair várias informações de cada um deles. Também esperam-se elevados requisitos de desempenho com relação à latência, visto que todas essas inúmeras mensagens devem ser enviadas a um centro de controle, que será o responsável pela análise dos dados recebidos e tomada de decisão. Por isso, caso alguma das mensagens sofra grande latência, ela poderá chegar ao seu destino atrasada demais para a tomada de decisão, como o acionamento de uma chave de alta tensão por exemplo, conduzindo o sistema a resultados errôneos.
+O conceito de SG engloba diversos tipos de serviços, que devem coexistir em uma rede de comunicação de maneira satisfatória visando garantir a correta operação do sistema. Logo, é normal que existam diversas exigências de funcionamento e desempenho. Segundo \cite{Art_Aggarwal2010} pode-se prever nessa rede um elevado número de mensagens devido ao grande número de elementos adicionados à rede. Essas mensagens devem crescer muito mais rapidamente que o número de elementos, visto que deve-se extrair várias informações de cada um deles. Também são esperados elevados requisitos de desempenho com relação à latência, visto que todas essas mensagens devem ser enviadas a um centro de controle, que será o responsável pela análise dos dados recebidos para tomada de decisão. Por isso, caso alguma das mensagens sofra grande latência, ela poderá chegar ao seu destino atrasada demais para a tomada de decisão, como o acionamento de uma chave de alta tensão por exemplo, conduzindo o sistema a resultados errôneos.
 
 Outro requisito de grande importância, é a confiabilidade do sistema de comunicação utilizado para estabelecer a rede de SG. Um dos cenários mais exigentes deste quesito origina-se nas fontes renováveis de energia. É fácil perceber que elementos como geradores fotoelétricos ou eólicos são intrinsecamente dependentes de condições externas como nível de insolação local ou quantidade e velocidade dos ventos. Logo eles não são capazes de gerar uma quantidade constante de energia, por isso os dispositivos de armazenamento representam um ponto importante no sistema. Eles devem ser responsáveis por possibilitar o armazenamento da energia gerada para posterior uso em momentos de baixa produção. Mas para isso é necessária uma alta disponibilidade da rede, promovendo acesso instantâneo de informações de geração sob praticamente qualquer circunstância, exigindo-se níveis de confiabilidade entre 99\% e 99,99\% \cite{Art_Gungor2013}.
 
 Considerando que, de maneira geral, o modo mais seguro de aumentar o nível de confiabilidade de um sistema de comunicação seria oferecer uma rota redundante para o mesmo, podemos dizer que quanto mais rotas redundantes forem oferecidas maior o nível de confiabilidade alcançado na rede. Neste sentido, um equipamento de comunicação que fornece a possibilidade do estabelecimento de uma rede óptica utilizando um \emph{grid} ou topologia \emph{mesh} deve, naturalmente, oferecer grande aderência às necessidades da rede.
 
 %Redes como a descrita, são comumente encontradas em cenários de SG em DG, e normalmente são estabelecidas através da utilização de protocolos de roteamento padrão como \emph{"Spanning Tree Protocol"} (STP). O STP tem a função básica de calcular os caminhos ótimos para a comunicação entre o centro de controle da rede e os equipamentos de campo, eliminando os \emph{loops} decorrentes da ligação \emph{mesh} utilizada para o estabelecimento do \emph{grid}. Para isso o protocolo determina as rotas mais eficientes (de menor custo) em cada um dos segmentos de rede. Resultando em um grafo mínimo da rede que conecta todos os nós.
-Na prática, as redes utilizadas em cenários de SG em DG, são criadas com o máximo de redundâncias possíveis controladas através da utilização de protocolos de roteamento como o \emph{``Spanning Tree Protocol''} (STP). O STP tem a função básica de calcular os caminhos ótimos para a comunicação entre o centro de controle da rede e os equipamentos de campo, eliminando os \emph{loops} decorrentes dos múltiplos caminhos existentes na topologia utilizada para o estabelecimento do \emph{grid}. Para isso o protocolo determina as rotas mais eficientes (de menor custo) em cada um dos segmentos de rede otimizando o grafo da rede e garantindo a conexão entre todos os nós.
+Na prática, as redes utilizadas em cenários de SG em DG, são criadas com o máximo de redundâncias possíveis controladas através da utilização de protocolos de roteamento como o STP, que neste caso, tem a função básica de calcular os caminhos ótimos para a comunicação entre o centro de controle da rede e os equipamentos de campo, eliminando os \emph{loops} decorrentes dos múltiplos caminhos existentes na topologia utilizada para o estabelecimento do \emph{grid}. Para isso o protocolo determina as rotas mais eficientes (de menor custo) em cada um dos segmentos de rede otimizando o grafo da rede e garantindo a conexão entre todos os nós.
 
 \section{BSN - \emph{Bypass} Seletivo de Nós}
 \label{sec:proposta}
-O presente artigo tem como proposta um protocolo para a descoberta e estabelecimento de rotas completamente desagregado do protocolo de roteamento utilizado na rede em questão. O protocolo proposto pode ser utilizado em qualquer rede que contenha multi-caminhos ou redundâncias, apesar de apresentar melhores resultados quando aplicado à redes \emph{mesh} devido a maior possibilidade de recombinações.
+O presente artigo tem como proposta o protocolo BSN, cujo objetivo é a descoberta e estabelecimento de rotas completamente desagregado do protocolo de roteamento utilizado na rede em questão. O protocolo proposto pode ser utilizado em qualquer rede que contenha multi-caminhos ou redundâncias, apesar de apresentar melhores resultados quando aplicado à redes \emph{mesh} devido a maior possibilidade de recombinações. Para tanto, é necessário que a rede em questão possa ser representada por um grafo simples, ou seja, um grafo que não possui arestas paralelas ou pontas coincidentes (laços).
 
 De maneira geral, uma rede \emph{mesh} apresenta vários possíveis caminhos entre o ponto inicial e destino da comunicação, sendo que dessa forma existem custos atrelados ao roteamento, encaminhamento e processamento de pacotes em qualquer comunicação neste tipo de topologia. A proposta atua no refino destes custos através do estabelecimento de caminhos específicos/estratégicos para cada enlace.
 
 Basicamente existem dois tipos de equipamentos que podem ser utilizados em redes ópticas (como as apresentadas na seção \ref{sec:Ambientacao}), os puramente ópticos e os elétricos. Os equipamentos puramente ópticos possuem custo muito elevado e são muito sensíveis, já que têm a capacidade de realizar o roteamento de luz (baseado no comprimento de onda dos sinais) e por isso não são utilizados em larga escala, normalmente esse tipo de tecnologia pode ser encontrado em alguns filtros e \emph{splitters} especiais. Já os equipamentos elétricos possuem custos muito mais atrativos e são normalmente empregados para roteamento de maneira geral, mas em contrapartida são sensivelmente mais lentos.
 
-Os atrasos existentes em equipamentos elétricos utilizados em redes ópticas têm diversas origens, como o processamento dos dados (intrinsecamente relacionado ao poder de processamento do equipamento) e as conversões de meio necessárias, sendo que para cada equipamento pode-se considerar pelo menos duas (óptica-elétrica-óptica). 
+Os atrasos existentes em equipamentos elétricos utilizados em redes ópticas têm diversas origens, como o processamento dos dados (intrinsecamente relacionado ao poder de processamento do equipamento) e as conversões de meio necessárias, sendo que para cada equipamento pode-se considerar pelo menos duas dessas conversões (óptica-elétrica-óptica). 
 
 Logo, todas as vezes que um pacote trafega em uma rede óptica, acaba sofrendo atrasos que são traduzidos em forma de latência, que devem ser somadas a fim de determinar a latência total de um enlace. A Figura \ref{fig_latency_link} mostra a acúmulo da latência através de um enlace óptico entre dois pontos. 
 
-\begin{figure}[ht] % normalmente utilizar [!t]
+\begin{figure} % normalmente utilizar [!t]
 	\centering
 	\includegraphics[width=12cm]{latency_link}
 	\caption{Latência em comunicação entre dois pontos utilizando link óptico. Os principais pontos de inserção de latência na comunicação são resultantes dos processos de conversão elétrica-óptica, transmissão de dados, conversão óptica-elétrica e disponibilização dos dados no destino (desserialização e processamento). Adaptado de \cite{Art_Coffey}.}
 	\label{fig_latency_link}
 \end{figure}
 
-Logo, a proposta apresentada denominada de \emph{``Bypass Seletivo de Nós''} (BSN), ocupa um lugar intermediário entre os equipamentos puramente ópticos e os ópticos/elétricos. O BSN consiste em um protocolo especificamente desenvolvido para otimização de latência em redes ópticas através da utilização de chaveadores ópticos em pontos estratégicos da rede. Dessa forma equipamentos em posições específicas da rede podem ser desviados sem a necessidade de nenhuma conversão de meio ou processamento de sinais, resultando na mínima inserção de latência possível. O método de funcionamento do BSN será melhor detalhado posteriormente através do pseudocódigo representado no Algoritmo \ref{pseudocode_bsn}.
+Logo, a proposta apresentada neste artigo, denominada de \emph{``Bypass Seletivo de Nós''} (BSN), ocupa um lugar intermediário entre os equipamentos puramente ópticos e os ópticos/elétricos. O BSN consiste em um protocolo especificamente desenvolvido para otimização de latência em redes ópticas através da utilização de chaveadores ópticos em pontos estratégicos da rede. Dessa forma equipamentos em posições específicas da rede podem ser desviados sem a necessidade de nenhuma conversão de meio ou processamento de sinais, resultando na mínima inserção de latência possível. O método de funcionamento do BSN será melhor detalhado posteriormente através do pseudocódigo que será representado no Algoritmo \ref{pseudocode_bsn}.
 
-Os pontos da rede de acionamento do chaveador óptico podem ser escolhidos em ramos do grafo com muitos vértices (\emph{hops}) ou podem ser planejados para o estabelecimento de rotas específicas para comunicação com pontos críticos do sistema, estabelecendo um SLA (\emph{Service Level Agreement}) em \emph{layer} físico.
+Os pontos da rede de acionamento do chaveador óptico podem ser escolhidos em ramos de um grafo com muitos vértices (\emph{hops}) ou podem ser planejados para o estabelecimento de rotas específicas para comunicação com pontos críticos do sistema, estabelecendo um SLA (\emph{Service Level Agreement}) em \emph{layer} físico.
 
-Através da utilização do BSN é possível reduzir o grafo da rede possibilitando uma nova configuração de conexões e consequentemente uma nova variedade de rotas possíveis. Cada vez que o BSN ativa um \emph{bypass} as duas arestas envolvidas são unificadas evitando o vértice das mesmas, criando assim um novo grafo com uma distância entre os dois vértices finais de um vértice a menos, como representado na Figura \ref{fig_bypass_exemplo}. Dessa forma, em caso de falha ou mudança de SLA, a topologia física pode ser alterada automaticamente.
+Através da utilização do BSN é possível reduzir o grafo da rede possibilitando uma nova configuração de conexões e consequentemente uma nova variedade de rotas possíveis. Cada vez que o BSN ativa um \emph{bypass}, as duas arestas envolvidas são unificadas evitando o vértice das mesmas, criando assim um novo grafo com uma distância entre os dois vértices finais de um vértice a menos, como representado na Figura \ref{fig_bypass_exemplo}. Dessa forma, em caso de falha ou mudança de SLA, a topologia física pode ser alterada automaticamente.
 
-Para isso certos cuidados devem ser tomados, como a utilização de chaveadores ópticos em pontos estratégicos da rede que não criem ``ilhas'' de equipamentos sem conexão. É importante também que os chaveadores utilizados possam ser controlados à partir do centro de controle da rede. Desta forma, em caso de alguma falha na rede pode-se reajustá-la de maneira automática garantindo a melhor operação em qualquer circunstância.
+Para isso certos cuidados devem ser tomados, como a utilização de chaveadores ópticos em pontos estratégicos da rede que não criem isolamento de equipamentos sem conexão. É importante também que os chaveadores utilizados possam ser controlados à partir do centro de controle da rede. Desta forma, em caso de alguma falha na rede pode-se reajustá-la de maneira automática garantindo a melhor operação em qualquer circunstância.
 
 \begin{figure}[ht] % normalmente utilizar [!t]
 	\centering
@@ -165,31 +174,31 @@ Para isso certos cuidados devem ser tomados, como a utilização de chaveadores 
 \subsection{Cenário aplicável}
 O BSN foi desenvolvido considerando-se aplicações como as descritas na Seção \ref{sec:Ambientacao}, ou seja, em cenários constituídos por redes representadas por grafos simples. É importante notar que este tipo de aplicação considera a existência de um vértice raiz, onde deve estar presente o centro de controle da rede. Dessa forma, todas as comunicações estabelecidas na rede devem ser originadas ou destinadas a este vértice.
 
-Com o objetivo de avaliar a performance do BSN foram realizadas simulações considerando uma rede de testes fictícia representada pelo grafo simples da Figura \ref{fig_rede_estudo}. Neste grafo, consideraremos que o nó ``E'' é o nó raiz e os demais nós são equipamentos de campo com os quais precisam ser estabelecidas rotas de comunicação.
+Com o objetivo de avaliar o desempenho do BSN foram realizadas simulações considerando uma rede de testes fictícia representada pelo grafo da Figura \ref{fig_rede_estudo}. Neste grafo, consideraremos que o nó ``E'' é o nó raiz e os demais nós são equipamentos de campo com os quais precisam ser estabelecidas rotas de comunicação.
 
 \begin{figure}[ht] % normalmente utilizar [!t]
 	\centering
 	\includegraphics[width=8.5cm]{Rede_Estudo_PB}
-	\caption{Grafo de rede a ser otimizado.}
+	\caption{Grafo da rede a ser avaliada.}
 	\label{fig_rede_estudo}
 \end{figure}
 
 \subsection{Metodologia}
-Para a avaliação de performance do BSN foi utilizada a rede de estudos apresentada na Figura \ref{fig_rede_estudo}. Esta rede foi submetida a otimização através da utilização de protocolos conhecidos como o PRIM e o STP (\emph{Minimal Spanning Tree}) para comparação com o resultado obtido através do BSN.
+%Para a avaliação do desempenho do BSN foi utilizada a rede de estudos apresentada na Figura \ref{fig_rede_estudo}. Esta rede foi submetida a otimização através da utilização de protocolos conhecidos como o PRIM e o STP (\emph{Minimal Spanning Tree}) para comparação com o resultado obtido através do BSN.
 
-%utilizado para encontrar a árvore mínima do grafo - (\emph{Minimal Spanning Tree}) e o protocolo STP (\emph{Spanning Tree Protocol}) cuja utilização é recorrente em casos reais, considerando o vértice raiz como sendo o nó "E". O resultado desta otimização foi utilizado como base de comparação para o resultado da aplicação do BSN.
+Para comprovar a eficiência da proposta BSN foi realizada uma avaliação de desempenho comparando os protocolos já estabelecidos PRIM e STP com o BSN. A rede de testes utilizada foi representada na Figura \ref{fig_rede_estudo}.
 
 \subsubsection{Restrições}
-O protocolo proposto foi desenvolvido para ser utilizado em redes ópticas de topologia \emph{mesh}. Para tanto, é necessário que a rede em questão possa ser representada por um grafo simples, ou seja, um grafo que não possui arestas paralelas ou pontas coincidentes (laços).
+%O protocolo proposto foi desenvolvido para ser utilizado em redes ópticas de topologia \emph{mesh}. Para tanto, é necessário que a rede em questão possa ser representada por um grafo simples, ou seja, um grafo que não possui arestas paralelas ou pontas coincidentes (laços).
 
 As simulações realizadas consideram apenas a topologia representada na Figura \ref{fig_rede_estudo}, cujas conexões foram inspiradas em uma rede SG real. Nesta rede as conexões entre os equipamentos são realizadas através de \emph{transceivers} bidirecionais que utilizam diferentes comprimentos de onda para TX e RX. Dessa forma a interconexão entre os equipamentos da rede deve respeitar a premissa de nunca ser realizada entre \emph{transceivers} de mesmo modelo visto que neste caso haveriam incompatibilidades entre os comprimentos de onda utilizados na transmissão e recepção de dados. Esta restrição, apesar de presente na rede estudada, não é um impeditivo para a utilização do BSN em outros tipos de redes ópticas, visto que existem diferentes modelos de chaveadores ópticos que podem adequar-se a tais redes.
 
 %O conceito de funcionamento do BSN pode ser aplicado em redes metálicas caso seja utilizado um componente análogo ao chaveador óptico. Esta opção não foi abordada ou considerada no presente documento.
-\subsection{Resultados}
+\subsection{Resultados Obtidos}
 \label{sec:resultados}
-\subsubsection{\emph{Minimal Spanning Tree} - PRIM}
+\subsubsection{Avaliação do Protocolo \emph{Minimal Spanning Tree} - PRIM}
 \label{sec:minimal_spanning_tree}
-Para utilização do algoritmo PRIM, todas as arestas do grafo foram consideradas como possuindo o mesmo custo, representando uma rede sem o favorecimento de nenhuma rota em específico. A saída do algoritmo fornece uma nova configuração de grafo, baseada na original e excluindo as arestas redundantes de maneira a obter o menor custo total. Ou seja, um grafo com todos os vértices conectados e o menor número de arestas possível.
+Para utilização do algoritmo PRIM, todas as arestas do grafo foram consideradas como possuindo o mesmo custo, representando uma rede sem o favorecimento de nenhuma rota em específico. A saída do algoritmo fornece uma nova configuração de grafo, baseada na original (grafo da Figura \ref{fig_rede_estudo}) e excluindo as arestas redundantes de maneira a obter o menor custo total. Ou seja, um grafo com todos os vértices conectados e o menor número de arestas possível.
 
 Visto que este algoritmo busca a criação de um grafo com o menor número de arestas possível, ele não leva em consideração um vértice raiz, como é o caso desejado para a aplicação. Mas após a árvore geradora mínima resultante ser redesenhada considerando-se o vértice ``E'' como sendo o raiz obtém-se a rede apresentada na Figura \ref{fig_rede_otimizada_prim}.
 
@@ -211,7 +220,7 @@ A utilização do STP aplicado à rede de estudos apresentada na Figura \ref{fig
 \end{figure}
 
 \subsubsection{\emph{Bypass Seletivo de Nós} - BSN}
-Utilizando o BSN aplicado à mesma rede de estudos utilizada nas outras simulações e também considerando o vértice ``E'' como sendo o vértice raiz do grafo obtem-se o resultado apresentado na Figura \ref{fig_rede_otimizada_BSN}.
+Utilizando o BSN aplicado à mesma rede de estudos utilizada nas outras simulações e também considerando o vértice ``E'' como sendo o vértice raiz do grafo obtém-se o resultado apresentado na Figura \ref{fig_rede_otimizada_BSN}.
 
 \begin{figure}[ht] % normalmente utilizar [!t]
 	\centering
@@ -250,11 +259,11 @@ O método de redução do grafo de rede utilizado pelo BSN é descrito sucintame
 \label{pseudocode_bsn}
 \end{algorithm}
 
-\subsection{Discussões}
+\subsection{Discussões e Análise dos Dados}
 
 O objetivo principal do BSN é o de fornecer configurações de topologia de rede ópticas que possibilitem o estabelecimento de comunicações com valores de latência otimizados. Como descrito na seção \ref{sec:proposta} do presente documento, cada equipamento existente em um ramo de comunicação é uma fonte de inserção de latência na rede, sendo assim pode-se afirmar que cada \emph{hop} adicional em um ramo do grafo resultante da rede pode ser traduzido como uma inserção de latência no mesmo. Logo, ao encurtar os ramos do grafo minimiza-se o valor de latência da rede.
 
-A partir dos resultados apresentados na Seção \ref{sec:resultados} pode-se notar uma sensível mudança no parâmetro de profundidade máxima do grafo entre os métodos utilizados, o que é possível observar através de uma análise comparativa entre as Figuras \ref{fig_rede_otimizada_prim}, \ref{fig_rede_otimizada_STP} e \ref{fig_rede_otimizada_BSN} onde nota-se um aumento na largura do mesmo em detrimento da profundidade. Ou seja, temos um grafo com uma média de \emph{hops} menor para cada destino, resultando desta forma em menores valores de latência para a rede como um todo.
+A partir dos resultados apresentados na Seção \ref{sec:resultados} pode-se notar uma sensível mudança no parâmetro de profundidade máxima do grafo entre os métodos utilizados, o que é possível observar através de uma análise comparativa entre as Figuras \ref{fig_rede_otimizada_prim}, \ref{fig_rede_otimizada_STP} e \ref{fig_rede_otimizada_BSN} onde nota-se uma variação na largura do mesmo em relação a profundidade. Ou seja, temos um grafo com uma média de \emph{hops} menor para cada destino, resultando desta forma em menores valores de latência para a rede como um todo.
 
 A Tabela \ref{tab_comparacao} é o resultado da compilação dos resultados apresentados na seção \ref{sec:resultados}.
 
@@ -272,7 +281,7 @@ BSN & 15 & 7 \\ \hline
 \end{tabular}
 \end{table}
 
-Através da análise da Tabela \ref{tab_comparacao} pode-se notar expressiva melhora na rede ao utilizar o BSN. 
+Através da análise da Tabela \ref{tab_comparacao} pode-se notar expressiva melhora na redução do diâmetro da rede ao utilizar o BSN. 
 
 %A Tabela \ref{tab_percentual} mostra o percentual de melhoria nos parâmetros avaliados entre os três protocolos considerando a árvore geradora mínima do grafo (\emph{Minimal Spanning Tree} - PRIM) como base.
 
@@ -285,9 +294,9 @@ Para comparação do percentual de melhoria entre as redes, é necessário consi
 	\label{fig_latencia_sistemica}
 \end{figure}
 
-Para fins de comparação pode-se analisar a latência de transmissão considerando o meio fibra-óptica através da velocidade média de propagação da luz no núcleo da fibra, de onde pode-se tirar que a latência neste meio é de aproximadamente 5 \textmu S/km. Logo, considerando que cada enlace entre dois pontos na rede da Figura \ref{fig_rede_estudo} possua, em média, 1km de extensão e que o tempo de processamento em cada um dos nós (desconsiderando o aumento de tempo no caso de excesso de processamento em determinados nós) é de 1ms na média (já incluindo os tempos das conversões de meio necessárias), gera-se a Tabela \ref{tab_percentual} que mostra a melhoria nos parâmetros avaliados entre os três protocolos.
+Para fins de comparação pode-se analisar a latência de transmissão considerando o meio fibra-óptica através da velocidade média de propagação da luz no núcleo da fibra, de onde pode-se tirar que a latência neste meio é de aproximadamente 5 \textmu s/km. Logo, considerando que cada enlace entre dois pontos na rede da Figura \ref{fig_rede_estudo} possua, em média, 1km de extensão e que o tempo de processamento em cada um dos nós (desconsiderando o aumento de tempo no caso de excesso de processamento em determinados nós) é de 1ms na média (já incluindo os tempos das conversões de meio necessárias), gera-se a Tabela \ref{tab_percentual} que mostra a melhoria nos parâmetros avaliados entre os três protocolos.
 
-A Figura \ref{fig_tab_percentual} relaciona alguns dos parâmetros mostrados na Tabela \ref{tab_percentual}. Nesta figura fica claro a relação de melhoria entre os protocolos quando aplicados à rede de estudada. É interessante salientar que, mesmo em redes relativamente pequenas como no caso apresentado (apenas 47 pontos de automação), a utilização do BSN forneceu uma redução de mais de 33\% de latência máxima, valor muito expressivo para a aplicação em questão. Espera-se que a melhoria seja ainda maior em redes com mais nós, haja vista a maior possibilidade de reconfiguração da rede. 
+A Figura \ref{fig_tab_percentual} relaciona alguns dos parâmetros mostrados na Tabela \ref{tab_percentual}. Nesta figura fica claro a relação de melhoria do protocolo proposto, quando aplicados à rede de estudada, em comparação com os demais. É interessante salientar que, mesmo em redes relativamente pequenas como no caso apresentado (apenas 47 pontos de automação), a utilização do BSN forneceu uma redução de mais de 33\% de latência máxima, valor muito expressivo para a aplicação em questão. Espera-se que a melhoria seja ainda maior em redes com mais nós, haja vista a maior possibilidade de reconfiguração da rede. 
 
 \begin{table}[ht]
 \renewcommand{\arraystretch}{1.4}
@@ -314,13 +323,14 @@ A Figura \ref{fig_tab_percentual} relaciona alguns dos parâmetros mostrados na 
 
 \section{Conclusão}
 
-As redes \emph{Smart Grid} estão se tornando realidade devido a diversos fatores, dentre os quais pode-se salientar a utilização de fontes renováveis de energia e a massiva utilização de sensores e atuadores esperados para um futuro próximo. Devido à grande variedade de requisitos de rede necessários para atender as demandas presentes e futuras deste tipo de rede, espera-se que a infraestrutura utilizada para comunicação seja segura, eficiente, rápida e altamente disponível.
+%As redes \emph{Smart Grid} estão se tornando realidade devido a diversos fatores, dentre os quais pode-se salientar a utilização de fontes renováveis de energia e a massiva utilização de sensores e atuadores esperados para um futuro próximo. Devido à grande variedade de requisitos de rede necessários para atender as demandas presentes e futuras deste tipo de rede, espera-se que a infraestrutura utilizada para comunicação seja segura, eficiente, rápida e altamente disponível.
+%
+%Estas necessidades justificam facilmente a utilização de tecnologias como a fibra óptica e topologias como a \emph{mesh} para o estabelecimento da infraestrutura de comunicação a ser utilizada. Neste sentido é necessário atentar à possíveis inserções de latência devido às características fundamentais deste tipo de topologia.
+Este trabalho teve como objetivo tratar de possíveis inserções de latência em redes ópticas \emph{mesh} devido às características fundamentais deste tipo de topologia, que conforme visto, deve atender aos requisitos demandados pelo \emph{Smart Grid}.
 
-Estas necessidades justificam facilmente a utilização de tecnologias como a fibra óptica e topologias como a \emph{mesh} para o estabelecimento da infraestrutura de comunicação a ser utilizada. Neste sentido é necessário atentar à possíveis inserções de latência devido às características fundamentais deste tipo de topologia.
+Através da comparação entre os resultados apresentados, com e sem a utilização do método proposto, fica fácil perceber que a utilização das chaves ópticas foi capaz de minimizar a latência de uma rede já otimizada através da utilização de um protocolo de rede padrão como o STP. Isto deve-se ao fato da manipulação do grafo da rede ter sido realizada em \emph{layer1}. Dessa forma torna-se possível o estabelecimento de políticas de SLA em nível físico, ou seja, sem nenhum tipo de processamento direto no encaminhamento dos pacotes, o que sem dúvida é um ponto de grande avanço quando comparado com técnicas comuns de priorização de serviço.
 
-Através da comparação entre os resultados apresentados, com e sem a utilização do método proposto, fica fácil perceber que a utilização das chaves ópticas foi capaz de minimizar ainda mais a rede já otimizada, mesmo que através da utilização de um protocolo de rede padrão como o STP. Isto deve-se ao fato da manipulação do grafo da rede ter sido realizada em \emph{layer1}. Dessa forma torna-se possível o estabelecimento de políticas de SLA em nível físico, ou seja, sem nenhum tipo de processamento direto no encaminhamento dos pacotes, o que sem dúvida é um ponto de grande avanço quando comparado com técnicas comuns de priorização de serviço.
-
-No exemplo utilizado pode-se obter uma melhora significativa no número de saltos necessários para a realização da comunicação como mostrado na Tabela \ref{tab_comparacao}, sendo que esperam-se valores ainda mais significativos em redes maiores devido a maior combinação de possibilidades para utilização dos chaveadores ópticos.
+No exemplo utilizado pode-se perceber uma melhora significativa no número de saltos necessários para a realização da comunicação. Acredita-se que valores ainda mais significativos sejam obtidos em redes maiores devido a maior combinação de possibilidades para utilização dos chaveadores ópticos.
 
 Sendo assim, o BSN cumpre seu principal objetivo oferecendo uma maneira eficaz de diminuição de latência em redes ópticas de topologia \emph{mesh} independentemente do protocolo de busca de rotas utilizado. 
 
