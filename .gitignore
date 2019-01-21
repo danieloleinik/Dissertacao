@@ -1,8 +1,11 @@
 *.lof
+*.pdf
+>>>>>>> anelise
 *.aux
 *.bbl
 *.log
 *.bak
+<<<<<<< HEAD
 *.blg
 *.lot
 *.lsg
@@ -11,3 +14,5 @@
 *.tcp
 *monografia.pdf
 *Daniel*.pdf
+*.blg
+
