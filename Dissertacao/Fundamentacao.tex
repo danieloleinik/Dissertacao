@@ -112,3 +112,30 @@ A topologia em malha ou \emph{mesh} por sua vez, é caracterizada pela criação
 A tecnologia de transmissão está diretamente ligada ao meio físico utilizado, que não precisa ser necessariamente construído em cabos metálicos. Podem ser utilizados fibras ópticas, enlaces de micro-ondas, ondas infravermelhas, satélites de comunicação, entre outros \cite{Book_Tanenbaum2003}. 
 
 Além disso, as redes de computadores podem, e comumente são, criadas através da interconexão de redes híbridas, ou seja, diferentes sub-redes criadas com tecnologias de transmissão distintas. Essas redes por sua vez têm diferentes taxas de transmissão e valores típicos de latência e demais parâmetros aos quais todos os pacotes que as atravessarem estarão submetidos \cite{Book_Kurose2013}. Logo, quando é necessário realizar uma comunicação entre \emph{hosts} em redes que utilizam tecnologias de transmissão diferentes é necessária a existência de algum tipo de mecanismo para regulação da velocidade de transferência de informação assim como políticas de garantia de entrega dos dados. Estes mecanismos são algumas das responsabilidades básicas dos protocolos de roteamento como o TCP/IP.
+
+\section{Protocolos de Roteamento}
+\label{cap_protocolos_de_roteamento}
+Este capítulo destina-se à discussão de alguns dos protocolos de roteamento recorrentemente utilizados no cenário descrito.
+
+\subsection{Definição de Protocolo}
+Assim como no mecanismo formal de troca de informações entre humanos um protocolo de comunicação é o que estabelece as regras básicas para troca de dados entre máquinas. Segundo \cite{Book_Kurose2013} um procolo de comunicação define o formato e a ordem das mensagens trocadas entre duas ou mais entidades, assim como as ações necessárias para que esses dados sejam corretamente recebidos/enviados. A Figura \ref{fig_explicacao_protocolo} exemplifica este paralelo.
+
+\begin{figure}[!htb]
+	\centering
+	\includegraphics[width=0.5\textwidth]{./figuras/Explicacao-Protocolo.png} % <- formatos PNG, JPG e PDF
+	\caption[Exemplo de Protocolo de Comunicação]{Exemplo de Protocolo de Comunicação, o paralelo entre o mecanismo de comuniacação entre humanos e um protocolo de comunicação entre máquinas exemplifica a definição de ``protocolo''.}
+	\fonte{\cite{Book_Kurose2013}}
+	\label{fig_explicacao_protocolo}
+\end{figure}
+
+Um protocolo de comunicação pode ser implementado em software, hardware ou em uma combinação de ambos. De maneira geral, eles são convenientemente separados em camadas ou \emph{layers}, que por sua vez oferecem ``serviços'' aos \emph{layers} superiores \cite{Book_Kurose2013}. Esses \emph{layers} são normalmente baseados em um modelo conhecido como Modelo de Referencia \sigla{OSI}{\emph{Open Systems Interconnection}} convenientemente representado na Figura \ref{fig_modelo_OSI}. Essa modularidade é extremamente útil visto que fornece um nível de abstração interessante aos protocolos, possibilitando por exemplo que o mesmo protocolo possa ser utilizado independentemente do meio físico em questão.
+
+\begin{figure}[!htb]
+	\centering
+	\includegraphics[width=0.4\textwidth]{./figuras/Modelo-OSI.png} % <- formatos PNG, JPG e PDF
+	\caption[Modelo OSI]{Comparação entre o Modelo de Referência OSI e a pilha de protocolos de Internet.}
+	\fonte{\cite{Book_Kurose2013}}
+	\label{fig_modelo_OSI}
+\end{figure}
+
+\subsection{Descrever protocolos comuns???}
