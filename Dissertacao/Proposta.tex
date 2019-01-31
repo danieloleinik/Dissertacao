@@ -1,6 +1,7 @@
 \chapter{Proposta}
 Este capítulo destina-se à descrição da proposta do presente documento.
 
+\section{BSN}
 Conforme descrito na seção \ref{cap_protocolos_de_roteamento} um protocolo de roteamento é responsável pelo tratamento e pela dinâmica das mensagens e dados trocados entre os dispositivos participantes da comunicação. Como dinâmica pode-se citar o cálculo de rotas a serem utilizadas e, neste sentido, a proposta do presente documento pode ser considerada como um protocolo para estabelecimento de caminhos ótimos de rede através da manipulação do \emph{layer} físico da rede.
 
 objetivo é a descoberta e estabelecimento de rotas completamente desagregado do protocolo de roteamento utilizado na rede em questão. O protocolo proposto pode ser utilizado em qualquer rede que contenha multi-caminhos ou redundâncias, apesar de apresentar melhores resultados quando aplicado à redes \emph{mesh} devido a maior possibilidade de recombinações. Para tanto, é necessário que a rede em questão possa ser representada por um grafo simples, ou seja, um grafo que não possui arestas paralelas ou pontas coincidentes (laços).
@@ -11,7 +12,7 @@ Basicamente existem dois tipos de equipamentos que podem ser utilizados em redes
 
 Os atrasos existentes em equipamentos elétricos utilizados em redes ópticas têm diversas origens, como o processamento dos dados (intrinsecamente relacionado ao poder de processamento do equipamento) e as conversões de meio necessárias, sendo que para cada equipamento pode-se considerar pelo menos duas dessas conversões (óptica-elétrica-óptica). 
 
-Logo, todas as vezes que um pacote trafega em uma rede óptica, acaba sofrendo atrasos que são traduzidos em forma de latência, que devem ser somadas a fim de determinar a latência total de um enlace. A Figura \ref{fig_latency_link} mostra a acúmulo da latência através de um enlace óptico entre dois pontos. 
+Logo, todas as vezes que um pacote trafega em uma rede óptica, acaba sofrendo atrasos que são traduzidos em forma de latência. Estes atrasos devem ser somados a fim de determinar a latência total de um enlace. A Figura \ref{fig_latency_link} mostra a acúmulo da latência através de um enlace óptico entre dois pontos. 
 
 \begin{figure} [!htb]% normalmente utilizar [!t]
 	\centering
@@ -23,7 +24,29 @@ Logo, todas as vezes que um pacote trafega em uma rede óptica, acaba sofrendo a
 
 Logo, a proposta apresentada neste artigo, denominada de \emph{``Bypass Seletivo de Nós''} (BSN), ocupa um lugar intermediário entre os equipamentos puramente ópticos e os ópticos/elétricos. O BSN consiste em um protocolo especificamente desenvolvido para otimização de latência em redes ópticas através da utilização de chaveadores ópticos em pontos estratégicos da rede. Dessa forma equipamentos em posições específicas da rede podem ser desviados sem a necessidade de nenhuma conversão de meio ou processamento de sinais, resultando na mínima inserção de latência possível. 
 
-O método de redução do grafo de rede utilizado pelo BSN é descrito sucintamente em alto nível através do pseudocódigo representado no Algoritmo \ref{pseudocode_bsn}. O BSN utiliza vários conceitos de otimização simultaneamente. A ideia básica é a utilização de um algoritmo genético para a criação de diferentes combinações de estado dos chaveadores óticos na rede (de acordo com as premissas de projeto a serem adotadas). Dessa forma, cada uma das combinações geradas pelo algoritmo genético acaba por gerar uma nova topologia de conexões físicas, que são por sua vez otimizadas buscando obter a rede menos profunda possível. Para o passo representado na linha \ref{bsn:fitness_line} do Algoritmo \ref{pseudocode_bsn} (busca local), pode ser utilizado qualquer algoritmo conhecido sendo que o presente documento utilizou uma busca de custo uniforme, garantindo assim a obtenção do valor ótimo de \emph{fitness}.
+Os pontos da rede de acionamento do chaveador óptico podem ser escolhidos em ramos de um grafo com muitos vértices (\emph{hops}) ou podem ser planejados para o estabelecimento de rotas específicas para comunicação com pontos críticos do sistema, estabelecendo um \sigla{SLA}{\emph{Service Level Agreement}} em \emph{layer} físico.
+
+Através da utilização do BSN é possível reduzir o grafo da rede possibilitando uma nova configuração de conexões e consequentemente uma nova variedade de rotas possíveis. Cada vez que o BSN ativa um \emph{bypass}, as duas arestas envolvidas são unificadas evitando o vértice das mesmas, criando assim um novo grafo com uma distância entre os dois vértices finais de um vértice a menos, como representado na Figura \ref{fig-bypass-exemplo}. Dessa forma, em caso de falha ou mudança de SLA, a topologia física pode ser alterada automaticamente.
+
+\begin{figure} % normalmente utilizar [!t]
+	\centering
+	\includegraphics[width=0.5\textwidth]{./figuras/Bypass-exemplo-PB.png}
+	\caption[Exemplo de atuação de \emph{by-pass} óptico]{Efeito da utilização do chaveador ótico. Em ``a'' pode-se ver a rede original contendo dois saltos entre os vértices A e C. Em ``b'' após o acionamento do dispositivo no vértice B pode-se ver e existência de apenas um salto entre os vértices A e C}
+	\label{fig-bypass-exemplo}
+\end{figure}
+
+\section{Computação Evolucional e Inteligência Artificial}
+Comumente conhecida como \sigla{IA}{Inteligência Artificial} ou \sigla{AI}{Artificial Intelligence}, a Inteligência Artificial pode ser considerada como um campo de pesquisa multidisciplinar ligado ao desenvolvimento e investigação de sistemas inteligentes \cite{Book-Brownlee2011}. Segundo \cite{Book-Russel2009} a IA pode ser dividida em 4 categorias: sistemas que pensam como humanos, sistemas que agem como humanos, sistemas que pensam com razão e sistemas que agem com razão.
+
+Um dos campos comumente relacionados à IA é a \sigla{CE}{Computação Evolucionária}, que foi inicialmente concebida por Lawrence J. Fogel em meados de 1960 e pode ser representada como a junção de diferentes abordagens de simulação de aspectos da evolução. Todas estas abordagens envolvem aspectos em comum como reprodução, aleatoriedade ou mutação, competição e seleção. Até o surgimento da CE a IA estava, em sua maioria, focada em heurísticas e simulações de redes neurais primitivas. Abordagens estas que mostravam-se, segundo Fogel, limitadas já que produzem modelos muito mais próximos de um comportamento humano do que de um processo envolvido na criação de indivíduos ou intelectos (evolução) \cite{Book-Back2000}.
+
+De maneira geral a evolução é um processo de otimização, o que definitivamente não implica em perfeição, aliado à grande robustez de adaptação visto que o mundo real nunca é estático \cite{Book-Back2000}.
+
+Os \sigla{AG}{Algoritmos Genéticos} são uma classe de algoritmos utilizados em computação evolucional
+
+%Inserir descrição sobre Inteligencia artificial e algoritmos genéticos
+
+O método de redução do grafo de rede utilizado pelo BSN é descrito sucintamente em alto nível através do pseudocódigo representado no Algoritmo \ref{pseudocode_bsn}. O BSN utiliza vários conceitos de otimização simultâneos. A ideia básica é a utilização de um algoritmo genético para a criação de diferentes combinações de estado dos chaveadores óticos na rede (de acordo com as premissas de projeto a serem adotadas). Dessa forma, cada uma das combinações geradas pelo algoritmo genético acaba por gerar uma nova topologia de conexões físicas, que são por sua vez otimizadas buscando obter a rede menos profunda possível. Para o passo representado na linha \ref{bsn:fitness_line} do Algoritmo \ref{pseudocode_bsn} (busca local), pode ser utilizado qualquer algoritmo conhecido sendo que o presente documento utilizou uma busca de custo uniforme, garantindo assim a obtenção do valor ótimo de \emph{fitness}.
 
 \begin{algorithm} [h]
 \caption{ - Algoritmo básico do BSN}
@@ -53,13 +76,3 @@ O método de redução do grafo de rede utilizado pelo BSN é descrito sucintame
 \label{pseudocode_bsn}
 \end{algorithm}
 
-Os pontos da rede de acionamento do chaveador óptico podem ser escolhidos em ramos de um grafo com muitos vértices (\emph{hops}) ou podem ser planejados para o estabelecimento de rotas específicas para comunicação com pontos críticos do sistema, estabelecendo um \sigla{SLA}{\emph{Service Level Agreement}} em \emph{layer} físico.
-
-Através da utilização do BSN é possível reduzir o grafo da rede possibilitando uma nova configuração de conexões e consequentemente uma nova variedade de rotas possíveis. Cada vez que o BSN ativa um \emph{bypass}, as duas arestas envolvidas são unificadas evitando o vértice das mesmas, criando assim um novo grafo com uma distância entre os dois vértices finais de um vértice a menos, como representado na Figura \ref{fig-bypass-exemplo}. Dessa forma, em caso de falha ou mudança de SLA, a topologia física pode ser alterada automaticamente.
-
-\begin{figure} % normalmente utilizar [!t]
-	\centering
-	\includegraphics[width=0.5\textwidth]{./figuras/Bypass-exemplo-PB.png}
-	\caption[Exemplo de atuação de \emph{by-pass} óptico]{Efeito da utilização do chaveador ótico. Em ``a'' pode-se ver a rede original contendo dois saltos entre os vértices A e C. Em ``b'' após o acionamento do dispositivo no vértice B pode-se ver e existência de apenas um salto entre os vértices A e C}
-	\label{fig-bypass-exemplo}
-\end{figure}
