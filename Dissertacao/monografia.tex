@@ -24,6 +24,11 @@
 %\usepackage{subfigure}
 \usepackage{caption}
 \usepackage{subcaption}
+\usepackage{algpseudocode}
+\usepackage[Algoritmo]{algorithm}
+
+\algnewcommand\algorithmicforeach{\textbf{for each}}
+\algdef{S}[FOR]{ForEach}[1]{\algorithmicforeach\ #1\ \algorithmicdo}
 
 %Podem utilizar GEOMETRY{...} para realizar pequenos ajustes das margens. Onde, left=esquerda, right=direita, top=superior, bottom=inferior. P.ex.:
 %\geometry{left=3.0cm,right=1.5cm,top=4cm,bottom=1cm} 
@@ -142,6 +147,10 @@ a smart reactive management.
 \counterwithout{figure}{chapter}% Continuous numbering of figures
 %---------- Segundo Capitulo ----------
 \input {Fundamentacao.tex}
+
+%---------- Terceiro Capitulo ----------
+\input {Proposta.tex}
+
 %\chapter{Desenvolvimento}
 %\label{chap:desenv}
 %

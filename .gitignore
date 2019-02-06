@@ -1,17 +1,16 @@
 *.lof
 *.pdf
->>>>>>> anelise
 *.aux
 *.bbl
 *.log
 *.bak
-<<<<<<< HEAD
 *.blg
 *.lot
 *.lsg
 *.toc
 *.tps
 *.tcp
+*.toc
 *monografia.pdf
 *Daniel*.pdf
 *.blg
