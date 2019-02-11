@@ -13,7 +13,7 @@ Logo, todas as vezes que um pacote trafega em uma rede óptica acaba sofrendo at
 
 \begin{figure} [!htb]% normalmente utilizar [!t]
 	\centering
-	\includegraphics[width=0.5\textwidth]{./figuras/latency-link.png}
+	\includegraphics[width=1\textwidth]{./figuras/latency-link.png}
 	\caption[Latência de Link]{Latência em comunicação entre dois pontos utilizando link óptico. Os principais pontos de inserção de latência na comunicação são resultantes dos processos de conversão elétrica-óptica, transmissão de dados, conversão óptica-elétrica e disponibilização dos dados no destino (desserialização e processamento).}
 	\fonte{Adaptado de \cite{Art-Coffe2017}}
 	\label{fig_latency_link}
@@ -25,10 +25,28 @@ Os pontos da rede de acionamento do chaveador óptico podem ser escolhidos em ra
 
 Através da utilização do BSN é possível reduzir o grafo da rede possibilitando uma nova configuração de conexões e consequentemente uma nova variedade de rotas possíveis. Cada vez que o BSN ativa um \emph{bypass}, as duas arestas envolvidas são unificadas evitando o vértice das mesmas, criando assim um novo grafo com uma distância entre os dois vértices finais de um vértice a menos, como representado na Figura \ref{fig-bypass-exemplo}. Dessa forma, em caso de falha ou mudança de SLA, a topologia física pode ser alterada automaticamente.
 
-\begin{figure} % normalmente utilizar [!t]
+%\begin{figure} % normalmente utilizar [!t]
+	%\centering
+	%\includegraphics[width=0.5\textwidth]{./figuras/Bypass-exemplo-PB.png}
+	%\caption[Exemplo de atuação de \emph{by-pass} óptico]{Efeito da utilização do chaveador ótico. Em ``a'' pode-se ver a rede original contendo dois saltos entre os vértices A e C. Em ``b'' após o acionamento do dispositivo no vértice B pode-se ver e existência de apenas um salto entre os vértices A e C}
+	%\label{fig-bypass-exemplo}
+%\end{figure}
+\begin{figure}[t!]
 	\centering
-	\includegraphics[width=0.5\textwidth]{./figuras/Bypass-exemplo-PB.png}
-	\caption[Exemplo de atuação de \emph{by-pass} óptico]{Efeito da utilização do chaveador ótico. Em ``a'' pode-se ver a rede original contendo dois saltos entre os vértices A e C. Em ``b'' após o acionamento do dispositivo no vértice B pode-se ver e existência de apenas um salto entre os vértices A e C}
+	\begin{subfigure}[t]{0.4\textwidth}
+		\centering
+		\includegraphics[width=4cm]{./figuras/Bypass-exemplo-A.png} % <- formatos PNG, JPG e PDF
+		\caption{Chaveador óptico desativado}
+		\label{fig_bypass_exemplo_A}
+	\end{subfigure}%
+	~
+	\begin{subfigure}[t]{0.4\textwidth}
+		\centering
+		\includegraphics[width=4cm]{./figuras/Bypass-exemplo-B.png} % <- formatos PNG, JPG e PDF
+	\caption{Chaveador óptico ativado}
+	\label{fig_bypass_exemplo_B}
+	\end{subfigure}
+	\caption[Exemplo de atuação de \emph{by-pass} óptico]{Efeito da utilização do chaveador ótico em uma rede de comunicação. Em \ref{fig_bypass_exemplo_A} pode-se ver a rede original contendo dois saltos entre os vértices A e C. Em \ref{fig_bypass_exemplo_B} após o acionamento do dispositivo no vértice B pode-se ver e existência de apenas um salto entre os vértices A e C}
 	\label{fig-bypass-exemplo}
 \end{figure}
 
