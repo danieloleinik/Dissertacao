@@ -113,6 +113,24 @@ A tecnologia de transmissão está diretamente ligada ao meio físico utilizado,
 
 Além disso, as redes de computadores podem, e comumente são, criadas através da interconexão de redes híbridas, ou seja, diferentes sub-redes criadas com tecnologias de transmissão distintas. Essas redes por sua vez têm diferentes taxas de transmissão e valores típicos de latência e demais parâmetros aos quais todos os pacotes que as atravessarem estarão submetidos \cite{Book-Kurose2013}. Logo, quando é necessário realizar uma comunicação entre \emph{hosts} em redes que utilizam tecnologias de transmissão diferentes é necessária a existência de algum tipo de mecanismo para regulação da velocidade de transferência de informação assim como políticas de garantia de entrega dos dados. Estes mecanismos são algumas das responsabilidades básicas dos protocolos de roteamento como o TCP/IP.
 
+\subsection{Comutadores Ópticos}
+Nas redes ópticas atuais, os nós centrais são formados por comutadores ópticos, também chamados de \sigla{OXC}{Optical Cross Connect} pagina 24. Exitem basicamente três diferentes classificações de equipamentos OXC descritas brevemente a seguir.
+
+\subsubsection{OXC Opacos}
+OXC opacos são assim chamados por impedirem a passagem direta da luz, ou seja, o roteamento que esse tipo de equipamento oferece é realizado em no domínio elétrico. Todos os sinais que entram no equipamento são convertido em sinais elétricos e enviados a um \emph{switch} ou processador eletrônico que fará o devido processamento ou roteamento, para que então esses sinais sejam novamente convertidos em sinais ópticos através da utilização de \emph{transceivers} e lasers. Esses equipamentos são muitas vezes conhecidos como \sigla{OEO}{Optical-Electrical-Optical} ou Óptico-Elétrico-Óptico em tradução livre.
+
+Equipamentos OXC opacos possuem o inconveniente de que a circuitaria eletrônica utilizada acaba por limitar a banda do sinal. Existem diversas razões para esta limitação sendo as principais delas as conversões de meio necessárias e o poder de processamento do próprio equipamento. Apesar disso, a grande vantagem deste tipo de equipamento reside no custo, que é sensivelmente mais baixo do que o de opções puramente ópticas, além da possibilidade de regeneração do sinal óptico a cada nó da rede visto que o sinal precisa ser recriado.
+
+\subsubsection{OXC Transparentes}
+OXC transparentes são assim chamados por não interromperem o sinal de luz que os transpassa. Esse tipo de equipamento tem a capacidade de realizar a separação dos comprimentos de onda ou \simbolo{$\lambda$}{comprimento de onda} de luz e seu devido encaminhamento ou roteamento para a interface desejada. 
+
+Em linhas gerais, a luz que chega ao equipamento (composta por diferentes $\lambda$s) é demultiplexada de acordo com a sua cor ou $\lambda$, direcionada para a saída desejada e unida aos demais sinais luminosos a serem da respectiva saída através de um multiplexador, para então serem enviados através de uma fibra óptica. 
+
+Percebe-se que este tipo de equipamento faz a divisão e roteamento de luz em grande parte de maneira passiva, alterando o menos possível os sinais que por ele transitam (normalmente o efeito mais significativo sobre o sinal está relacionado à potência do mesmo), logo o sinal não é demodulado/interpretado impedindo a obtenção de métricas de qualidade ou controle sobre a comunicação. Além disso, estes equipamentos costumam ter sua performance grandemente atrelada a dispositivos sensíveis, como filtros internos, o que acarreta em um custo final elevado. Razões estas que impedem sua ampla utilização em redes ópticas de grande porte.
+
+\subsubsection{OXC Translúcidos}
+De maneira geral, pode-se dizer que um equipamento OXC translúcido representa um compromisso entre os dois tipos anteriores. Ou seja, um equipamento de roteamento em redes ópticas que tem a capacidade de processamento de pacotes e de chaveamento de luz. Este tipo de equipamento é o foco do presente trabalho.
+
 \section{Protocolos de Roteamento}
 \label{cap_protocolos_de_roteamento}
 Este capítulo destina-se à discussão de alguns dos protocolos de roteamento recorrentemente utilizados no cenário descrito.
