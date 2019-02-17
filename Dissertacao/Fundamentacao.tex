@@ -114,23 +114,41 @@ A tecnologia de transmissão está diretamente ligada ao meio físico utilizado,
 Além disso, as redes de computadores podem, e comumente são, criadas através da interconexão de redes híbridas, ou seja, diferentes sub-redes criadas com tecnologias de transmissão distintas. Essas redes por sua vez têm diferentes taxas de transmissão e valores típicos de latência e demais parâmetros aos quais todos os pacotes que as atravessarem estarão submetidos \cite{Book-Kurose2013}. Logo, quando é necessário realizar uma comunicação entre \emph{hosts} em redes que utilizam tecnologias de transmissão diferentes é necessária a existência de algum tipo de mecanismo para regulação da velocidade de transferência de informação assim como políticas de garantia de entrega dos dados. Estes mecanismos são algumas das responsabilidades básicas dos protocolos de roteamento como o TCP/IP.
 
 \subsection{Comutadores Ópticos}
-Nas redes ópticas atuais, os nós centrais são formados por comutadores ópticos, também chamados de \sigla{OXC}{Optical Cross Connect} pagina 24. Exitem basicamente três diferentes classificações de equipamentos OXC descritas brevemente a seguir.
+A comunicação em redes ópticas é feita através da modulação de sinais luminosos, cada um desses sinais possui uma frequência diferente (usualmente também chamada de cor do sinal) o que implica em diferentes comprimentos de onda (\simbolo{$\lambda$}{comprimento de onda}). Redes complexas e com grande número de $\lambda$s  como as redes ópticas atuais, possuem em seus nós centrais equipamentos conhecidos como comutadores ópticos, também chamados de \sigla{OXC}{Optical Cross Connect}. OXCs podem realizar roteamento interno de sinais de maneira puramente óptica, puramente elétrica ou até mesmo híbrida\cite{Book-Ramaswami2010}. Existem basicamente três diferentes classificações de equipamentos OXC, os opacos, os transparentes e os translúcidos.
+%Usar Optical Networks pagina 488
+OXC opacos são assim chamados por impedirem a passagem direta da luz, ou seja, o roteamento que esse tipo de equipamento oferece é realizado no domínio elétrico. Para isso todos os sinais que entram no equipamento são convertido em sinais elétricos e enviados a um \emph{switch} ou processador eletrônico que fará o devido roteamento, para que então esses sinais sejam novamente convertidos em sinais ópticos através da utilização de \emph{transceivers} e lasers. Este tipo de equipamento é amplamente empregado em redes ópticas atuais e são muitas vezes conhecidos como \sigla{OEO}{Optical-Electrical-Optical} ou Óptico-Elétrico-Óptico em tradução livre.
 
-\subsubsection{OXC Opacos}
-OXC opacos são assim chamados por impedirem a passagem direta da luz, ou seja, o roteamento que esse tipo de equipamento oferece é realizado em no domínio elétrico. Todos os sinais que entram no equipamento são convertido em sinais elétricos e enviados a um \emph{switch} ou processador eletrônico que fará o devido processamento ou roteamento, para que então esses sinais sejam novamente convertidos em sinais ópticos através da utilização de \emph{transceivers} e lasers. Esses equipamentos são muitas vezes conhecidos como \sigla{OEO}{Optical-Electrical-Optical} ou Óptico-Elétrico-Óptico em tradução livre.
+Equipamentos OXC opacos possuem o inconveniente de que a circuitaria eletrônica utilizada acaba por limitar a banda do sinal. Existem diversas razões para esta limitação sendo as principais delas as conversões de meio necessárias e o poder de processamento do próprio equipamento. Apesar disso, a grande vantagem deste tipo de equipamento reside no custo benefício, já que ele possibilita a regeneração do sinal óptico a cada nó da rede, visto que o sinal precisa ser recriado, e o controle e obtenção de métricas relativas à comunicação transportada por ele.  
 
-Equipamentos OXC opacos possuem o inconveniente de que a circuitaria eletrônica utilizada acaba por limitar a banda do sinal. Existem diversas razões para esta limitação sendo as principais delas as conversões de meio necessárias e o poder de processamento do próprio equipamento. Apesar disso, a grande vantagem deste tipo de equipamento reside no custo, que é sensivelmente mais baixo do que o de opções puramente ópticas, além da possibilidade de regeneração do sinal óptico a cada nó da rede visto que o sinal precisa ser recriado.
+OXC transparentes por sua vez, são assim chamados por não interromperem o sinal de luz que os transpassa. Esse tipo de equipamento tem a capacidade de realizar a separação dos comprimentos de onda de luz e seu devido encaminhamento ou roteamento para a interface desejada. 
 
-\subsubsection{OXC Transparentes}
-OXC transparentes são assim chamados por não interromperem o sinal de luz que os transpassa. Esse tipo de equipamento tem a capacidade de realizar a separação dos comprimentos de onda ou \simbolo{$\lambda$}{comprimento de onda} de luz e seu devido encaminhamento ou roteamento para a interface desejada. 
+Em linhas gerais, a luz que chega ao equipamento (composta por diferentes $\lambda$s) é demultiplexada de acordo com a sua cor ou $\lambda$, direcionada para a saída desejada e unida aos demais sinais luminosos da respectiva saída através de um multiplexador, para então serem enviados através de uma fibra óptica. 
 
-Em linhas gerais, a luz que chega ao equipamento (composta por diferentes $\lambda$s) é demultiplexada de acordo com a sua cor ou $\lambda$, direcionada para a saída desejada e unida aos demais sinais luminosos a serem da respectiva saída através de um multiplexador, para então serem enviados através de uma fibra óptica. 
+Percebe-se que este tipo de equipamento faz a divisão e roteamento de luz em grande parte de maneira passiva, alterando o menos possível os sinais que por ele transitam (normalmente o efeito mais significativo sobre o sinal está relacionado à potência e separação de $\lambda$s do mesmo), logo o sinal não é demodulado/interpretado impedindo a obtenção de métricas de qualidade ou controle sobre a comunicação. Além disso, estes equipamentos costumam ter sua performance grandemente atrelada a dispositivos sensíveis, como filtros internos, o que acarreta em um custo final elevado. A Figura \ref{fig_oxc_optico} contém o diagrama básico de um OXC transparente. Razões estas que impedem sua ampla utilização em redes ópticas de grande porte.
 
-Percebe-se que este tipo de equipamento faz a divisão e roteamento de luz em grande parte de maneira passiva, alterando o menos possível os sinais que por ele transitam (normalmente o efeito mais significativo sobre o sinal está relacionado à potência do mesmo), logo o sinal não é demodulado/interpretado impedindo a obtenção de métricas de qualidade ou controle sobre a comunicação. Além disso, estes equipamentos costumam ter sua performance grandemente atrelada a dispositivos sensíveis, como filtros internos, o que acarreta em um custo final elevado. Razões estas que impedem sua ampla utilização em redes ópticas de grande porte.
+\begin{figure}[!htb]
+	\centering
+	\includegraphics[width=0.5\textwidth]{./figuras/OXC-Optico.png} % <- formatos PNG, JPG e PDF
+	\caption[Exemplo básico de OXC óptico]{Exemplo básico de um equipamento OXC transparente. Percebe-se que o sinal de entrada é apenas repassado à respectiva saída sem nenhuma outra intervenção.}
+	\fonte{\cite{Book-Ramaswami2010}}
+	\label{fig_oxc_optico}
+\end{figure}
 
-\subsubsection{OXC Translúcidos}
-De maneira geral, pode-se dizer que um equipamento OXC translúcido representa um compromisso entre os dois tipos anteriores. Ou seja, um equipamento de roteamento em redes ópticas que tem a capacidade de processamento de pacotes e de chaveamento de luz. Este tipo de equipamento é o foco do presente trabalho.
+Por fim, um OXC translúcido traduz-se em um equipamento que representa um compromisso entre os dois tipos anteriores. Ou seja, um equipamento de roteamento em redes ópticas que tem a capacidade de processamento de pacotes e de chaveamento de luz. Este tipo de equipamento, apesar de não ser comumente encontrado, é o foco do presente trabalho.
 
+A proposta que será detalhadamente descrita no Capítulo \ref{capitulo_proposta} pode ser usada para transformar um equipamento óptico seja qual for em um equipamento similar a um OXC translúcido através da utilização de chaveadores ópticos ou \emph{switches} ópticos.
+
+Chaveadores ópticos são componentes capazes de desviar um feixe luminoso através da utilização de um prisma refletor. A Figura \ref{fig_chaveador_optico} mostra o diagrama interno simplificado de um chaveador óptico, percebe-se que seu funcionamento é análogo ao de um relé elétrico.
+
+\begin{figure}[!htb]
+	\centering
+	\includegraphics[width=0.5\textwidth]{./figuras/Switch_optico.jpg} % <- formatos PNG, JPG e PDF
+	\caption[Exemplo básico chaveador óptico]{Diagrama interno simplificado de um chaveador óptico. Em um estado este componente transmite bidirecionalmente a luz da interface A para D e B para C, quando acionado ele transmite bidirecionalmente a luz da interface A para B.}
+	\fonte{Adaptado de \cite{Accelink2014}}
+	\label{fig_chaveador_optico}
+\end{figure}
+
+A utilização de um chaveador óptico em conjunto com um equipamento OEO pode conferir-lhe a capacidade de desviar sinais ópticos caso necessário, surgindo assim um equipamento de roteamento que pode ser classificado como sendo um OXC 
 \section{Protocolos de Roteamento}
 \label{cap_protocolos_de_roteamento}
 Este capítulo destina-se à discussão de alguns dos protocolos de roteamento recorrentemente utilizados no cenário descrito.

@@ -1,4 +1,5 @@
 \chapter{Proposta}
+\label{capitulo_proposta}
 Conforme descrito na seção \ref{cap_protocolos_de_roteamento} um protocolo de roteamento é responsável pelo tratamento e pela dinâmica das mensagens e dados trocados entre os dispositivos participantes da comunicação. Como dinâmica pode-se citar o cálculo de rotas a serem utilizadas e, neste sentido, a proposta do presente documento pode ser considerada como um protocolo para estabelecimento de caminhos ótimos de rede através da manipulação do \emph{layer} físico da rede.
 
 O objetivo é a descoberta e estabelecimento de rotas de comunicação de maneira completamente desagregada do protocolo de roteamento utilizado na rede em questão. O protocolo proposto pode ser utilizado em qualquer rede que contenha multi-caminhos ou redundâncias, apesar de apresentar melhores resultados quando aplicado à redes \emph{mesh} devido a maior possibilidade de recombinações. Para tanto, é necessário que a rede em questão possa ser representada por um grafo simples, ou seja, um grafo que não possui arestas paralelas ou pontas coincidentes (laços).
