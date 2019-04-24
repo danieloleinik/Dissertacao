@@ -162,7 +162,7 @@ Chaveadores ópticos são componentes capazes de desviar um feixe luminoso atrav
 \label{chap_grafos}
 Grafos são em essência a representação gráfica de interligação entre diferentes pontos, na matemática a teoria dos grafos é a ciência que estuda as relações entre um conjunto de objetos.
 
-Os grafos são representados por vértices conectados através de arestas (que representam a relação entre os vértices). Caso as arestas sejam orientadas (possuam sentido) o grafo é denominado direcionado, além disso, cada aresta pode conter um peso normalmente indicado no próprio grafo. Os grafos utilizados no presente documento são simples não englobam aqueles que possuem duas arestas diferentes com os mesmo par de pontas (ou seja, não contém arestas paralelas) ou arestas com pontas coincidentes (não contém laços) \cite{Man-Feofiloff2011}. Os tipos de grafos mais comuns são:
+Os grafos são representados por vértices conectados através de arestas (que representam a relação entre os vértices). Caso as arestas sejam orientadas (possuam sentido) o grafo é denominado direcionado, além disso, cada aresta pode conter um peso normalmente indicado no próprio grafo. Os grafos utilizados no presente documento são simples, ou seja, não englobam aqueles que possuem duas arestas diferentes com os mesmo par de pontas (ou seja, não contém arestas paralelas) ou arestas com pontas coincidentes (não contém laços) \cite{Man-Feofiloff2011}. Os tipos de grafos mais comuns são:
 
 \begin{itemize}
 	\item Grafo simples: grafo não direcionado, sem arestas paralelas e sem laços;
@@ -202,18 +202,49 @@ Existem outras convenções para representações de grafos, algumas delas são 
 
 Além disso, vale a pena ressaltar o conceito de valência ou grau de um vértice, que nada mais é que o número de arestas incidentes a ele. Utilizando mais uma vez o grafo representado na Figura \ref{fig_grafo_simples} pode-se dizer que os vértices 1, 3 e 4 têm valência 2; o vértice 2 tem valência 3 e o vértice 5 tem valência 1.
 
-Outro conceito importante para o presente trabalho é o de Árvore de extensão ou Árvore de dispersão (\emph{spanning tree} - normalmente o termo em inglês é mais utilizado), que pode ser traduzido como sendo o subconjunto de arestas de um grafo formando uma árvore que contém todos os vértices do grafo inicial. Como desdobramento deste conceito, pode-se facilmente definir a árvore de extensão mínima, árvore de geração mínima ou ainda \emph{minimal spanning tree} como sendo o subconjunto de arestas de menor peso total contendo todos os vértices do grafo inicial (supondo um grafo com arestas contendo pesos).
+Outro conceito importante para o presente trabalho é o de Árvore de extensão ou Árvore de dispersão (\emph{spanning tree} - normalmente o termo em inglês é mais utilizado), que pode ser traduzido como sendo o subconjunto de arestas de um grafo formando uma árvore que contém todos os vértices do grafo inicial. Como desdobramento deste conceito, pode-se facilmente definir a árvore de extensão mínima, árvore de geração mínima ou ainda \emph{minimal spanning tree} como sendo o subconjunto de arestas de menor peso total contendo todos os vértices do grafo inicial (supondo um grafo com arestas contendo pesos) \cite{Eppstein1996}.
 %avaliar onde colocar a referencia https://www.ics.uci.edu/~eppstein/pubs/Epp-TR-96-16.pdf
 %busca em grafos https://pt.wikipedia.org/wiki/Teoria_dos_grafos
 
-Existem vários algoritmos de busca em grafos CONTINUAR AQUI
+Os grafos, têm diversas aplicações e podem ser usados para representar uma grande variedade de problemas e situações, normalmente eles conseguem modelar de maneira satisfatória alguns dos problemas ds campos da matemática, informática, engenharia, química e outras áreas. De maneira geral, uma das aplicações mais comuns é a utilização de grafos para a descoberta de caminhos entre diferentes pontos, representados como vértices, do grafo em questão. Um caminho em um grafo pode ser definido como uma sequência de vértices de maneira de cada um dos vértices listados existe uma aresta para o vértice seguinte, sendo que o custo deste caminho é a soma dos custos das arestas utilizadas.
+
+Existem vários algoritmos de busca em grafos. Considerando-se grafos finitos, sempre é possível percorrer de modo sistemático todos os vértices e arestas existentes. Desta forma é possível também encontrar o menor caminho disponível (menor custo) entre dois vértices. De maneira geral existem dois modos básicos para percorrer um grafo, ''Busca em Largura`` ou \sigla{BFS}{\emph{Breadth-First Search}}; quando durante a procura de um vértice específico os vértices do grafo são visitados respeitando-se os níveis do mesmo;  e ''Busca em profundidade`` ou \sigla{DFS}{\emph{Depth-first search}}; quando durante a procura de um vértice específico todos os nós de um ramo são visitados antes dos vértices do mesmo nível. A Figura \ref{fig-busca-grafo} ilustra a diferença básica entre os dois modos.
+
+\begin{figure}[t!]
+	\centering
+	\begin{subfigure}[t]{0.4\textwidth}
+		\centering
+		\includegraphics[height=4cm]{./figuras/BFS.png} % <- formatos PNG, JPG e PDF
+		\caption{BFS}
+		\label{fig_BFS}
+	\end{subfigure}%
+	~
+	\begin{subfigure}[t]{0.4\textwidth}
+		\centering
+		\includegraphics[height=4cm]{./figuras/DFS.png} % <- formatos PNG, JPG e PDF
+	\caption{DFS}
+	\label{fig_DFS}
+	\end{subfigure}
+	\caption[Busca em Profundidade vs Largura]{Comparação básica entre busca em profundidade e largura. Em \ref{fig_BFS} pode-se notar que os vértices visitados são prioritariamente do mesmo nível em detrimento aos níveis mais baixos. Em \ref{fig_DFS} pode-se notar que todos os vértices de um ramo são visitados antes que o próximo seja explorado.}
+	\label{fig-busca-grafo}
+\end{figure}
 
 %https://pt.wikipedia.org/wiki/%C3%81rvore_de_extens%C3%A3o
+Dentre os algoritmos mais utilizados para busca em grafos destacam-se, neste documento, dois principais que terão grande aderência ao conteúdo aqui abordado. 
+
+\subsection{Algoritmo de Dijkstra}
+%https://pt.wikipedia.org/wiki/Algoritmo_de_Dijkstra
+O algoritmo de Dijkstra foi criado por Edsger Dijkstra em 1956. Ele é aplicável a grafos com múltiplos caminhos. À partir da estrutura inicial do grafo e de um vértice raiz, ele é capaz de extrair uma estrutura de árvore com apenas um caminho para cada vértice destino, selecionando para tal, os caminhos menos custosos. Ou seja, com o menor custo até a raiz \cite{Dijkstra1959}.
+
+\subsection{Algoritmo de Prim} 
+\label{subsection-algoritmo-prim}
+%https://en.wikipedia.org/wiki/Prim%27s_algorithm
+O algoritmo de Prim foi desenvolvido por  Vojtech Jarník em 1930 e posteriormente otimizado por Robert C. Prim em 1957 e Edsger Dijkstra em 1959, razão pela qual é também chamado de algoritmo Prim–Dijkstra. Ele é utilizado para encontrar um conjunto de arestas que formam uma árvore contendo todos os vértices de um grafo cujo peso total (soma dos pesos individuais de todas as arestas) é mínimo, formando dessa forma uma árvore geradora mínima \cite{Prim1957}.
 
 
 \section{Protocolos de Roteamento}
 \label{cap_protocolos_de_roteamento}
-Esta seção destina-se à discussão de alguns dos protocolos de roteamento recorrentemente utilizados no cenário descrito.
+Esta seção destina-se à discussão de alguns dos conceitos de protocolos de roteamento, tendo enfoque em alguns recorrentemente utilizados no cenário descrito.
 
 \subsection{Definição de Protocolo}
 Assim como no mecanismo formal de troca de informações entre humanos um protocolo de comunicação é o que estabelece as regras básicas para troca de dados entre máquinas. Segundo \cite{Book-Kurose2013} um procolo de comunicação define o formato e a ordem das mensagens trocadas entre duas ou mais entidades, assim como as ações necessárias para que esses dados sejam corretamente recebidos/enviados. A Figura \ref{fig_explicacao_protocolo} exemplifica este paralelo.
@@ -237,7 +268,7 @@ Um protocolo de comunicação pode ser implementado em software, hardware ou em 
 \end{figure}
 
 \subsection{Protocolos Relacionados}
-Um dos protocolos mais utilizados em SG é o \sigla{STP}{Spanning Tree Protocol} ou Spanning Tree Protocol. O STP recebeu este nome por ser baseado no algoritmo \emph{spanning tree} da teoria dos grafos. Ele na verdade faz parte de uma família de protocolos recorrentemente utilizados em redes de comunicação com multipercursos (caminhos redundantes). Seu principal foco é impedir a criação de \emph{loops} na rede decorrentes da topologia utilizada.
+Um dos protocolos mais utilizados em SG é o \sigla{STP}{Spanning Tree Protocol} ou Spanning Tree Protocol. O STP recebeu este nome por ser baseado no algoritmo Prim, capaz de calcular a árvore geradora mínima de um grafo (ou \emph{spanning tree}), conforme citado em \ref{subsection-algoritmo-prim}. Ele na verdade faz parte de uma família de protocolos recorrentemente utilizados em redes de comunicação com multipercursos (caminhos redundantes). Seu principal foco é impedir a criação de \emph{loops} na rede decorrentes da topologia utilizada.
 
 Para isso o STP utiliza pacotes especiais de controle denominados \sigla{BPDUs}{Bridge Protocol Data Units} para possibilitar que todos os equipamentos tenham o conhecimento completo da rede. De posse dessas informações, o caminho de menor custo (descrito em \ref{chap_grafos}) entre o nó raiz ou \emph{root} e os demais pode ser calculado e os comutadores então desligam as portas que não fazem parte deste caminho, criando um caminho único na rede para os pacotes trafegarem e impedindo a formação de \emph{loops}.
 
@@ -251,8 +282,8 @@ Assim como brevemente descrito no capítulo \ref{cap_introducao}, as redes intel
 \cline{2-3}
  & \multicolumn{1}{c|}{\textbf{Grid Atual}} & \multicolumn{1}{c|}{\textbf{Smart Grid}} \\ \hline
 \multicolumn{1}{|l|}{\textbf{Fluxo de informação}} & Unidirecional & Bidirecional \\ \hline
-\multicolumn{1}{|l|}{\textbf{Genração de eletricidade}} & Geração centralizada & Geração Distribuída \\ \hline
-\multicolumn{1}{|l|}{\textbf{Topologia do GRID}} & Radial & Rede \\ \hline
+\multicolumn{1}{|l|}{\textbf{Geração de eletricidade}} & Geração centralizada & Geração Distribuída \\ \hline
+\multicolumn{1}{|l|}{\textbf{Topologia do GRID}} & Radial & \emph{Mesh} \\ \hline
 \multicolumn{1}{|l|}{\textbf{Sensores}} & Poucos sensores & Muitos sensores \\ \hline
 \multicolumn{1}{|l|}{\textbf{Monitoramento}} & Usualmente inexistente & Auto monitorada \\ \hline
 \multicolumn{1}{|l|}{\textbf{Recuperação de falha}} & Restauração manual & auto reconfiguração \\ \hline
@@ -267,4 +298,4 @@ Assim como brevemente descrito no capítulo \ref{cap_introducao}, as redes intel
 \label{tab_comparacao_grids}
 \end{table}
 
-Como dito anteriormente, os requisitos de latência das redes \emph{Smart Grid} são altamente importantes devido a multiplicidade de sensores e aplicações suportadas pela rede. \cite{Art-Deshpande2011} contém uma tabela informativa sobre os requisitos de \emph{delay} e prioridade que devem ser praticados/atingidos nestas redes destacando-se os serviços de proteção que precisam alcançar os valores de latência mais baixos sob quaisquer circunstâncias. 
+Como dito anteriormente, os requisitos de latência das redes \emph{Smart Grid} são altamente importantes devido a multiplicidade de sensores e aplicações suportadas pela rede. \cite{Art-Deshpande2011} contém uma tabela informativa sobre os requisitos de \emph{delay} e prioridade que devem ser praticados/atingidos nestas redes destacando-se os serviços de proteção que precisam alcançar os valores de latência mais baixos sob quaisquer circunstâncias. Segundo \cite{Art-Deshpande2011} o atraso máximo para estes serviços deve ser de 10ms sob qualquer circunstância de rede, sendo este o principal fator motivador para a análise de possíveis formas de redução de latência em redes futuras onde o tráfego de dados será sensivelmente maior do que o das redes atuais.
