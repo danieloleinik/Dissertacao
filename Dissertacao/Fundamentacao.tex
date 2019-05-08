@@ -66,7 +66,7 @@ A topologia em árvore, talvez a mais recorrente em redes de computadores, é as
 	%\label{fig_topologia_arvore}
 %\end{figure}
 
-A topologia em malha ou \emph{mesh} por sua vez, é caracterizada pela criação de uma rede grandemente (podendo chegar a ser plenamente) interconectada, formando diversos caminhos redundantes para a interligação entre a origem e o destino das mensagens. Fato que confere a este tipo de rede um elevado grau de disponibilidade, visto que mesmo em caso de falha de equipamentos ou da infraestrutura a comunicação não é necessariamente comprometida. A Figura \ref{fig_topologia_multiplo_mesh} ilustra uma rede \emph{mesh}. É possível notar que existem diversas rotas redundantes devido aos vários links estabelecidos entre os equipamentos da rede.
+A topologia em malha ou \emph{mesh} por sua vez, é caracterizada pela criação de uma rede grandemente (podendo chegar a ser plenamente) interconectada, formando diversos caminhos redundantes para a interligação entre a origem e o destino das mensagens. Fato que confere a este tipo de rede um elevado grau de disponibilidade, visto que mesmo em caso de falha de equipamentos ou da infraestrutura a comunicação não é necessariamente comprometida. A Figura \ref{fig_topologia_multiplo_mesh} ilustra uma rede \emph{mesh}. É possível notar que existem diversas rotas redundantes devido aos vários links estabelecidos entre os equipamentos da rede. Da mesma forma, nota-se que neste tipo de topologia de rede existem custos atrelados ao roteamento, encaminhamento e processamento de pacotes já que, excluindo-se a situação em que o ponto origem e o destino da comunicação seja vizinhos (diretamente ligados um ao outro), será invariavelmente necessária a repetição de pacotes por parte de nós intermediários para o estabelecimento da comunicação.
 
 %\begin{figure}[!htb]
 	%\centering
@@ -132,7 +132,7 @@ OXC transparentes por sua vez, são assim chamados por não interromperem o sina
 
 Em linhas gerais, a luz que chega ao equipamento (composta por diferentes $\lambda$s) é demultiplexada de acordo com a sua cor ou $\lambda$, direcionada para a saída desejada e unida aos demais sinais luminosos da respectiva saída através de um multiplexador, para então serem enviados através de uma fibra óptica. 
 
-Percebe-se que este tipo de equipamento faz a divisão e roteamento de luz em grande parte de maneira passiva, alterando o menos possível os sinais que por ele transitam (normalmente o efeito mais significativo sobre o sinal está relacionado à potência e separação de $\lambda$s do mesmo), logo o sinal não é demodulado/interpretado impedindo a obtenção de métricas de qualidade ou controle sobre a comunicação. Além disso, estes equipamentos costumam ter sua performance grandemente atrelada a dispositivos sensíveis, como filtros internos, o que acarreta em um custo final elevado. Razões estas que impedem sua ampla utilização em redes ópticas de grande porte. A Figura \ref{fig_oxc_optico} contém o diagrama básico de um OXC transparente. 
+Percebe-se que este tipo de equipamento faz a divisão e roteamento de luz em grande parte de maneira passiva, alterando o menos possível os sinais que por ele transitam (normalmente o efeito mais significativo sobre o sinal está relacionado à potência e separação de $\lambda$s do mesmo), logo o sinal não é demodulado/interpretado impedindo a obtenção de métricas de qualidade ou controle sobre a comunicação. Além disso, estes equipamentos costumam ter sua performance grandemente atrelada a dispositivos sensíveis, como filtros internos, o que acarreta em um custo final elevado. Razões estas que impedem sua ampla utilização em redes ópticas de grande porte. Normalmente esse tipo de tecnologia pode ser encontrado em alguns filtros e \emph{splitters} especiais. A Figura \ref{fig_oxc_optico} contém o diagrama básico de um OXC transparente. 
 
 \begin{figure}[!htb]
 	\centering
@@ -299,3 +299,38 @@ Assim como brevemente descrito no capítulo \ref{cap_introducao}, as redes intel
 \end{table}
 
 Como dito anteriormente, os requisitos de latência das redes \emph{Smart Grid} são altamente importantes devido a multiplicidade de sensores e aplicações suportadas pela rede. \cite{Art-Deshpande2011} contém uma tabela informativa sobre os requisitos de \emph{delay} e prioridade que devem ser praticados/atingidos nestas redes destacando-se os serviços de proteção que precisam alcançar os valores de latência mais baixos sob quaisquer circunstâncias. Segundo \cite{Art-Deshpande2011} o atraso máximo para estes serviços deve ser de 10ms sob qualquer circunstância de rede, sendo este o principal fator motivador para a análise de possíveis formas de redução de latência em redes futuras onde o tráfego de dados será sensivelmente maior do que o das redes atuais.
+
+\section{Computação Evolucional e Inteligência Artificial}
+Comumente conhecida como \sigla{IA}{Inteligência Artificial} (Inteligência Artificial) ou \sigla{AI}{\emph{Artificial Intelligence}} (\emph{Artificial Intelligence}), a Inteligência Artificial pode ser considerada como um campo de pesquisa multidisciplinar ligado ao desenvolvimento e investigação de sistemas inteligentes \cite{Book-Brownlee2011}. Segundo \cite{Book-Russel2009} a IA pode ser dividida em 4 categorias: sistemas que pensam como humanos, sistemas que agem como humanos, sistemas que pensam com razão e sistemas que agem com razão.
+
+Um dos campos comumente relacionados à IA é a Computação Evolucionária ou \sigla{CE}{Computação Evolucionária}, que foi inicialmente concebida por Lawrence J. Fogel em meados de 1960 e pode ser representada como a junção de diferentes abordagens de simulação de aspectos da evolução. Todas estas abordagens envolvem aspectos em comum como: reprodução, aleatoriedade ou mutação, competição e seleção. Até o surgimento da CE a IA estava, em sua maioria, focada em heurísticas e simulações de redes neurais primitivas. Abordagens estas que mostravam-se, segundo Fogel, limitadas já que produzem modelos muito mais próximos de um comportamento humano do que de um processo envolvido na criação de indivíduos ou intelectos (evolução) \cite{Book-Back2000}.
+
+De maneira geral a evolução é um processo de otimização, o que definitivamente não implica em perfeição, aliado à grande robustez de adaptação visto que o mundo real nunca é estático \cite{Book-Back2000}.
+
+Uma das classes dos algoritmos evolucionários mais difundidas e utilizadas são os Algoritmos Genéticos ou \sigla{AG}{Algoritmos Genéticos}. Estes algoritmos são caracterizados por serem uma técnica de otimização global através de estratégias adaptativas. Eles são assim chamados por serem inspirados na genética e evolução de populações e por isso se utilizam de nomenclaturas como \emph{cromossomos, genes, recombinação, mutação, etc} \cite{Book-Brownlee2011}.
+
+De maneira básica e generalista pode-se dizer que uma população inicial de indivíduos devidamente correlacionados com o problema em questão é gerada, normalmente de maneira aleatória, e cada indivíduo é avaliado separadamente estabelecendo um \emph{ranking} (normalmente chamado de \emph{fitness}) dos mais adaptados ao problema sob análise. Então, alguns indivíduos da população são selecionados para reprodução, sendo que os indivíduos mais adaptados usualmente recebem mais chances de participar deste processo. Além disso, também existe a mutação que visa alterar o conteúdo genético de um indivíduo aleatoriamente, diferenciando-o de seus pais. Para o surgimento da nova geração, os indivíduos gerados (filhos) devem ser unidos aos seus pais e deve existir um método de seleção de indivíduos a fim de evitar o aumento descontrolado da população \cite{Book-Back2000}. Existem diversas técnicas diferentes para cada um dos passos acima citados, cada uma delas deve influenciar o algoritmo de maneira diferente (tempo de execução, utilização de memória, processamento utilizado, etc). Apesar de não existirem garantias, em qualquer um dos casos espera-se encontrar o valor ótimo para a função avaliada. O Algoritmo \ref{pseudocode_AG} é uma representação em alto nível da estratégia básica de um AG. 
+
+\begin{algorithm} [h]
+\caption{ - Exemplo de alto nível para AG}
+\begin{algorithmic}[1]
+\State $Population\gets \textit{InitializePopulation}$
+\State EvaluatePopulation(Population);
+\State $Sbest\gets \textit{GetBestSolution(Population)}$
+\While {$ StopCondition() $}
+\State $Parents\gets \textit{SelectParents(Population,PopulationSize)}$
+\State $Children\gets 0$
+\ForEach {$Parent1, Parent2 \in Parents $}
+\State $Child1, Child2 \gets Crossover(Parent1, Parent2)$
+\State $Children \gets Mutate(Child1)$
+\State $Children \gets Mutate(Child2)$
+\EndFor
+\State EvaluatePopulation(Children);
+\State $Sbest\gets \textit{GetBestSolution(Children)}$
+\State $Population\gets \textit{Replace(Population,Children)}$
+\EndWhile
+\State\Return Sbest
+\end{algorithmic}
+\fonte{Adaptado de \cite{Book-Brownlee2011}}
+\label{pseudocode_AG}
+\end{algorithm}
