@@ -2,6 +2,7 @@
 Este capítulo apresenta conceitos utilizados no desenvolvimento do trabalho, e portanto necessários para o correto entendimento do mesmo. Os tópicos aqui abordados são, quando necessários, direcionados ao objetivo final do trabalho e por isso podem não ser representar o universo do conhecimento sobre seu respectivo assunto.
 
 \section{Redes de Computadores}
+\label{redes-de-computadores}
 A história dos computadores de grande escala começa em fevereiro de 1946 através da invenção do primeiro ``computador integrador numérico eletrônico'' \sigla{ENIAC}{\emph{Electronic Numerical Integrator and Computer}} \cite{Book-Jean2013}. Ele começou a ser desenvolvido anos antes, durante a Segunda Guerra Mundial, com a principal tarefa de auxiliar nos cálculos necessários para o fronte de batalha.
 
 Em meados dos anos 50, com a popularização dos transistores, foi possível realizar uma imensa miniaturização dos circuitos eletrônicos possibilitando a criação de máquinas com altíssimo poder de processamento em um tamanho extremamente reduzido. Além disso, essas máquinas tornaram-se cada vez mais robustas e baratas, fazendo com que a posse e utilização de computadores pudesse ser disseminada, alcançando os patamares atuais.
@@ -277,7 +278,7 @@ Apesar de sua configuração muitas vezes não poder ser realizada por um leigo,
 \section{Redes Inteligentes de Distribuição de Energia}
 Assim como brevemente descrito no capítulo \ref{cap_introducao}, as redes inteligentes de distribuição de energia ou \emph{Smart Grids} oferecem uma ampla variedade de serviços até então minoritários ou até mesmo inexistentes nas redes de distribuição de energia convencionais. Em \cite{Art-Ma2013} pode-se encontrar um breve relato de alguns dos benefícios oferecidos pelas redes inteligentes como o melhor gerenciamento de energia, monitoramento remoto da operação e assertividade na recuperação diante de falhas, diminuição de desperdício através do maior controle entre ajuste de produção e demanda, menor necessidade de equipes de campo, entre outros. A Tabela \ref{tab_comparacao_grids} traz uma breve comparação entre os principais pontos de diferença entre as redes de comunicações utilizadas nas redes de distribuição de energia atuais e nas \emph{Smart Grids}.
 
-\begin{table}[]
+\begin{table}[tbp]
 \begin{tabular}{l|l|l|}
 \cline{2-3}
  & \multicolumn{1}{c|}{\textbf{Grid Atual}} & \multicolumn{1}{c|}{\textbf{Smart Grid}} \\ \hline
@@ -309,6 +310,7 @@ De maneira geral a evolução é um processo de otimização, o que definitivame
 
 Uma das classes dos algoritmos evolucionários mais difundidas e utilizadas são os Algoritmos Genéticos ou \sigla{AG}{Algoritmos Genéticos}. Estes algoritmos são caracterizados por serem uma técnica de otimização global através de estratégias adaptativas. Eles são assim chamados por serem inspirados na genética e evolução de populações e por isso se utilizam de nomenclaturas como \emph{cromossomos, genes, recombinação, mutação, etc} \cite{Book-Brownlee2011}.
 
+\subsection{Algoritmos Genéticos}
 De maneira básica e generalista pode-se dizer que uma população inicial de indivíduos devidamente correlacionados com o problema em questão é gerada, normalmente de maneira aleatória, e cada indivíduo é avaliado separadamente estabelecendo um \emph{ranking} (normalmente chamado de \emph{fitness}) dos mais adaptados ao problema sob análise. Então, alguns indivíduos da população são selecionados para reprodução, sendo que os indivíduos mais adaptados usualmente recebem mais chances de participar deste processo. Além disso, também existe a mutação que visa alterar o conteúdo genético de um indivíduo aleatoriamente, diferenciando-o de seus pais. Para o surgimento da nova geração, os indivíduos gerados (filhos) devem ser unidos aos seus pais e deve existir um método de seleção de indivíduos a fim de evitar o aumento descontrolado da população \cite{Book-Back2000}. Existem diversas técnicas diferentes para cada um dos passos acima citados, cada uma delas deve influenciar o algoritmo de maneira diferente (tempo de execução, utilização de memória, processamento utilizado, etc). Apesar de não existirem garantias, em qualquer um dos casos espera-se encontrar o valor ótimo para a função avaliada. O Algoritmo \ref{pseudocode_AG} é uma representação em alto nível da estratégia básica de um AG. 
 
 \begin{algorithm} [h]
