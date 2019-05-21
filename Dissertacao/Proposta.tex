@@ -86,9 +86,16 @@ Este exemplo ilustra, em uma rede de apenas 8 nós, o funcionamento do protocolo
 
 \subsection{Implementação}
 \label{implementacao}
-O método de redução do grafo de rede utilizado pelo BSN é descrito sucintamente em alto nível através do pseudocódigo representado no Algoritmo \ref{pseudocode_bsn}. O BSN utiliza vários conceitos de otimização simultâneos. A ideia básica é a utilização de um algoritmo genético para a criação de diferentes combinações de estado dos chaveadores ópticos na rede (de acordo com as premissas de projeto a serem adotadas). Dessa forma, cada uma das combinações geradas pelo algoritmo genético acaba por gerar uma nova topologia de conexões físicas, que são por sua vez otimizadas buscando obter a rede menos profunda possível. 
+O método de redução do grafo de rede utilizado pelo BSN é descrito sucintamente em alto nível através do fluxograma apresentado na Figura \ref{fig_bsn_flow}, também apresentado de maneira pouco mais detalhada no pseudocódigo representado no Algoritmo \ref{pseudocode_bsn}. O BSN utiliza vários conceitos de otimização simultâneos. A ideia básica é a utilização de um algoritmo genético para a criação de diferentes combinações de estado dos chaveadores ópticos na rede (de acordo com as premissas de projeto a serem adotadas). Dessa forma, cada uma das combinações geradas pelo algoritmo genético acaba por gerar uma nova topologia de conexões físicas, que são por sua vez otimizadas buscando obter a rede menos profunda possível. 
 
 Esta busca compreende, em essência, a escolha de quais arestas do grafo serão utilizadas para estabelecer a comunicação entre os nós e quais não serão utilizadas. Dessa forma, para o passo representado na linha \ref{bsn:fitness_line} do Algoritmo \ref{pseudocode_bsn} (busca local), que representa exatamente este passo do código, pode ser utilizado qualquer algoritmo conhecido. Daí vem o fato de o BSN ter a capacidade de ser utilizado com qualquer protocolo padrão de otimização de rede como o STP por exemplo. O presente documento utiliza para este passo uma busca de custo uniforme, garantindo assim a obtenção do valor ótimo de \emph{fitness}, que neste código está relacionado ao custo total da rede. Ou seja, o algoritmo de custo uniforme irá resultar na melhor rede possível para o grafo em questão já que este tipo de busca é exaustiva e explora todas as combinações possíveis para então selecionar a melhor delas.
+
+\begin{figure} [t]% normalmente utilizar [!t]
+	\centering
+	\includegraphics[width=1\textwidth]{./figuras/BSN-Flow.png}
+	\caption[Fluxograma do BSN]{Representação de fluxograma em alto nível do funcionamento do BSN}
+	\label{fig_bsn_flow}
+\end{figure}
 
 \begin{algorithm} [h]
 \caption{ - Algoritmo básico do BSN}
@@ -172,7 +179,7 @@ Assim fica claro o BSN não apenas minimiza o custo ou latência da rede como um
 	\label{tab_calc_custo}
 \end{table}
 
-\subsubsection{Representação - VERIFICAR ESTE TITULO}
+\subsubsection{Representação}
 Na Computação Evolutiva de maneira geral é comum encontrar de termos da biologia para representar estruturas e variáveis, o mesmo acontece no campo dos AGs, como no caso do BSN. No presente documento a relação entre estes termos é dada conforme o mostrado na Tabela \ref{tab-correlacao-bio-comp}.
 
 \begin{table}[ht]
@@ -267,7 +274,7 @@ O sucesso de qualquer AG está intrinsecamente relacionado ao tamanho de sua pop
 Para as simulações do BSN foram utilizadas populações de 500 indivíduos, este valor mostrou-se suficiente para alcançar valores ótimos de custo em várias redes de teste e foi adotado como padrão para as simulações posteriormente descritas.
 
 \subsubsection{Parâmetros Adotados}
-Para a utilização do BSN, assim como em qualquer AG, alguns parâmetros básicos precisam ser configurados. A Tabela \ref{tab-parametros} mostra os parâmetros utilizados nas simulações do BSN apresentadas na Seção \ref{resultados}.
+Para a utilização do BSN, assim como em qualquer AG, alguns parâmetros básicos precisam ser configurados. A Tabela \ref{tab-parametros} mostra os parâmetros utilizados nas simulações do BSN apresentadas na Seção \ref{resultados}, esses parâmetros foram selecionados após exaustivas simulações, tendo por objetivo confirmar que seus valores seriam suficientes para alcançar os resultados desejados.
 
 \begin{table}[ht]
 \centering
@@ -280,8 +287,77 @@ Para a utilização do BSN, assim como em qualquer AG, alguns parâmetros básic
 \label{tab-parametros}
 \end{table}
 
+\subsection{Programa de Simulação}
+No presente documento foram consideradas diversas configurações de rede diferentes, para isso foi criado um software de simulação para abastecer o BSN com as informações necessárias para a geração dos resultados apresentados na Seção \ref{resultados}. O funcionamento do programa de simulação criado para esta tarefa é basicamente descrito pelo fluxograma da Figura \ref{fig_prog_simula}.
 
-\subsection{programa de simulação}
+\begin{figure} [ht]% normalmente utilizar [!t]
+	\centering
+	\includegraphics[width=0.6\textwidth]{./figuras/programa-simulacao.png}
+	\caption[Fluxograma do Programa de Simulação]{Representação de fluxograma básico do funcionamento do Programa de Simulação criado para o BSN}
+	\label{fig_prog_simula}
+\end{figure}
+
+Como pode-se perceber o objetivo básico do programa é o de proporcionar a execução do BSN à partir de diferentes configurações de rede de maneira automatizada, entretanto um dos passos representados na Figura \ref{fig_prog_simula} envolve a criação automática de grafos e merece atenção especial.
+
+De acordo com o que foi anteriormente explicado neste documento, o BSN foi originalmente desenvolvido para aplicações em redes SG, principalmente considerando o cenário de distribuição de energia elétrica, logo faz-se necessário a análise de topologia deste tipo de rede de maneira a criar um algoritmo capaz de gerar grafos condizentes com a realidade apresentada nestes cenários.
+
+De acordo com \cite{Conf-Sood2009}, tipicamente existem dois cenários em aplicações SG para distribuição de energia elétrica: um ambiente rural pouco populado ou um ambiente urbano densamente populado e naturalmente conectado em malha. No caso do ambiente rural o desmpenho do BSN, obviamente, pode não apresentar grandes benefícios, visto que as redes de comunicação utilizadas nestes cenários devem dificilmente apresentar alguma redundância. Em contrapartida, as redes presentes nos grandes centros urbanos (densamente populados e naturalmente conectadas em malha) são o objetivo principal da presente proposta.
+
+De maneira geral as redes de distribuição de energia elétrica seguem a topologia da cidade em que são instaladas, ou seja, a disposição das ruas por onde passam. Desta forma fica fácil perceber que as interligações entre equipamentos irão também estar dispostas de acordo com essa premissa. A Figura \ref{fig_esquinas} apresenta algumas das possibilidades mais comuns de disposição de ruas por onde a rede de distribuição deve passar.
+
+\begin{figure}[t!]
+	\centering
+	\begin{subfigure}[t]{0.4\textwidth}
+		\centering
+		\includegraphics[width=2cm]{./figuras/esquinas1.png} % <- formatos PNG, JPG e PDF
+		\caption{Rua sem cruzamento.}
+		\label{fig_esquinas1}
+	\end{subfigure}%
+	~
+	\begin{subfigure}[t]{0.4\textwidth}
+		\centering
+		\includegraphics[width=3.5cm]{./figuras/esquinas2.png} % <- formatos PNG, JPG e PDF
+	\caption{Esquina comum.}
+	\label{fig_esquinas2}
+	\end{subfigure}
+	~
+	\begin{subfigure}[t]{0.4\textwidth}
+		\centering
+		\includegraphics[width=4cm]{./figuras/esquinas3.png} % <- formatos PNG, JPG e PDF
+	\caption{Cruzamento em ``T''.}
+	\label{fig_esquinas3}
+	\end{subfigure}
+	~
+	\begin{subfigure}[t]{0.4\textwidth}
+		\centering
+		\includegraphics[width=4cm]{./figuras/esquinas4.png} % <- formatos PNG, JPG e PDF
+	\caption{Cruzamento clássico.}
+	\label{fig_esquinas4}
+	\end{subfigure}
+	~
+	\begin{subfigure}[t]{0.4\textwidth}
+		\centering
+		\includegraphics[width=4cm]{./figuras/esquinas5.png} % <- formatos PNG, JPG e PDF
+	\caption{Cruzamento em asterisco.}
+	\label{fig_esquinas5}
+	\end{subfigure}
+	\caption{Tipos comuns de cruzamento}
+	\label{fig_esquinas}
+\end{figure}
+
+As ruas como a representada na Figura \ref{fig_esquinas1} podem conter equipamentos ligados em série ou, eventualmente, equipamentos ``terminais'' que possuam apenas uma conexão com o resto do \emph{grid} como no caso de uma rua sem saída por exemplo. Esse padrão de interligação não muda muito ao considerar ruas como a representada na Figura \ref{fig_esquinas2}. No caso dos cruzamentos como o representado na Figura \ref{fig_esquinas3} fica fácil perceber que podem ser instalados equipamentos com até 3 caminhos redundantes em fibra-óptica, este número aumenta para 4 caminhos redundantes em cruzamentos similares ao da Figura \ref{fig_esquinas4} e 5 para os da Figura \ref{fig_esquinas5}. 
+
+Obviamente a Figura \ref{fig_esquinas} não representa todos os tipos de cruzamentos possíveis e podem ser encontrados outras topologias aqui não mostradas. Entretanto é importante lembrar que para o objetivo específico a que se propõe o presente trabalho, uma redundância de rota pode ser literalmente traduzida como uma redundância de caminho. Ou seja, em um cruzamento como o representado na Figura \ref{fig_esquinas3} não faz sentido utilizar um equipamento com mais de 3 interconexões lógicas visto que neste caso 2 delas deveriam obrigatoriamente chegar ao equipamento utilizando a mesma via de acesso. Isso representaria uma grande falha de projeto, visto que a redundância oferecida por esta conexão extra seria completamente ineficaz no caso de um acidente como o rompimento de um cabo ou apagão.
+
+Desta forma, pode-se considerar que para o tipo de rede a que o BSN se propõe, as interconexões entre os equipamentos devem seguir uma distribuição de probabilidades que represente as características físicas da cidade alvo. Com este intuito foi realizada a análise de algumas redes SG reais brasileiras resultando na distribuição de probabilidades representada na Figura \ref{fig_dist_prob}, esta distribuição foi a utilizada no software de simulação para a geração dos grafos a serem utilizados no presente documento.
+
+\begin{figure} [ht]% normalmente utilizar [!t]
+	\centering
+	\includegraphics[width=0.85\textwidth]{./figuras/Distribuicao-prob.png}
+	\caption[Distribuição de probabilidade]{Distribuição de probabilidade de interligação de equipamentos em redes SG de distribuição de energia elétrica}
+	\label{fig_dist_prob}
+\end{figure}
+
 
 \section{Resultados}
 \label{resultados}
