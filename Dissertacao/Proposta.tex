@@ -365,6 +365,7 @@ Em outras palavras, a geração de grafos utilizadas para a simulação do BSN s
 \section{Resultados}
 \label{resultados}
 \subsection{Melhoria de custo total}
+\label{melhoria-custo-total}
 Para avaliação da performance do BSN foram utilizadas redes criadas aleatoriamente seguindo as premissas de distribuição de probabilidade descritas em \ref{prog_simulacao}. O programa de simulação foi configurado para gerar redes de 5 a 100 nós com passo incremental de 5 unidades, ou seja, foram geradas redes de 5, 10, 15 e assim sucessivamente até 100 nós. Além disso em todas as dimensões de rede foram geradas pelo menos 3 amostras onde uma delas foi limitada a grafos com valência máxima de 3 conexões, a outra com valência máxima de 4 e por fim 5 conexões, tendo por objetivo avaliar a utilização do protocolo proposto diante ao aumento de interconexões máximas em cada nó. É importante notar que o parâmetro alterado em cada um dos casos citados é o de valência máxima, ou seja, apesar de ainda seguir a distribuição de probabilidade de interconexões mostrada em \ref{prog_simulacao}, que representa a topologia física de uma cidade (e que por consequência não é facilmente alterável), simula-se desta forma a utilização de equipamentos com menor número de conexões do que o possível. Fato este recorrente no mundo real devido a limitações de orçamento ou dificuldades de lançamento/instalação de fibras ópticas, ou seja, mesmo em situações onde existe a possibilidade de conexão com vários equipamentos elas não são necessariamente realizadas. Por fim, cada uma das redes foi submetida à execução do BSN configurado com os parâmetros descritos em \ref{parametros}.
 
 A melhoria percentual do custo total da rede foi representada, por questões de facilidade de visualização, para apenas 5 execuções do software de simulação (para cada execução são geradas 20 redes aleatoriamente seguindo as premissas anteriormente expostas) nas Figuras \ref{fig_graph_bsn_val3} a \ref{fig_graph_bsn_val5}.
@@ -448,7 +449,66 @@ Baseando-se na conclusão de que a influência da valência no desempenho do BSN
 \end{figure}
 
 \subsection{Melhoria de custo Individual}
-Conforme explicitado em \ref{subsection-custo-da-rede}, além de significativa melhora no custo total da rede, o BSN apresenta um ótimo resultado ao avaliar-se o custo individual para comunicação entre o nó central e cada um dos demais.
+O BSN foi desenvolvido para redução de latência através da minimização do número de saltos considerando toda a rede avaliada, mas conforme explicitado em \ref{subsection-custo-da-rede}, além de significativa melhora no custo total da rede, o BSN também apresenta um ótimo resultado ao avaliar-se o custo individual para comunicação entre o nó central e cada um dos demais. De maneira geral, o algoritmo pode ser aplicado para diferentes objetivos de acordo com a função de \emph{fitness} utilizada, sendo que no presente caso esse valor é calculado conforme apresentado na Equação \ref{eq-fitness}.
+
+Dessa maneira, mudando o enfoque utilizado em \ref{melhoria-custo-total} para a análise dos resultados e avaliando os custos unitários de cada rota pode-se obter o gráfico apresentado na Figura \ref{fig_graph_melhoria_por_custo}.
+
+\begin{figure} [ht]% normalmente utilizar [!t]
+	\centering
+	\includegraphics[width=1\textwidth]{./figuras/Melhoria-por-custo.png} % <- formatos PNG, JPG e PDF
+	\caption[Custo antes e depois do BSN]{Gráfico comparativo de resultados médios de melhoria de custo individual para cada rota.}
+	\label{fig_graph_melhoria_por_custo}
+\end{figure}
+
+Para a geração da Figura \ref{fig_graph_melhoria_por_custo} foram consideradas todas as redes geradas pelo programa de simulação para abastecer o BSN conforme descrito em \ref{melhoria-custo-total}. Cada uma das conexões (ramos do grafo que realizam a interconexão entre o vértice origem e cada um dos destinos) de cada uma das redes foi avaliada e catalogada segundo seu custo, considerado neste documento como sendo igual ao número de saltos. Após este passo, o custo resultante para cada um dos destinos dessas conexões, após a otimização do BSN, foi avaliado. Dessa forma é possível saber a performance do BSN através da comparação de todos os destinos cujos custos no grafo da rede original eram de 1, 2, 3 e assim por diante frente aos novos custos obtidos nas redes resultantes após a aplicação do BSN.
+
+Seguindo esta premissa, na Figura \ref{fig_graph_melhoria_por_custo}, as barras denominadas de ``Custo original'' representam o custo dos ramos do grafo avaliados antes da utilização do BSN, enquanto as barras denominadas de ``Custo médio final'' representam a média de todos os custos resultantes após a utilização do BSN. Pode-se notar que para custos muito baixos o BSN, de modo geral, pode apresentar um resultado pior do que o da rede original, mas essa situação muda drasticamente para custos maiores, na verdade à partir de 3 saltos entre origem e destino o BSN passa a resultar em vantagem quando comparado à rede original.
+
+As redes geradas pelo software de simulação utilizado neste documento foram construídas à partir da geração aleatória de grafos seguindo a distribuição de probabilidades de conexão mostrada na Figura \ref{fig_dist_prob}. Foram geradas redes de 5 a 100 nós, resultando em grafos cujo número de saltos máximo foi de 24, como pode-se verificar na Figura \ref{fig_graph_melhoria_por_custo}, sendo que para este número de saltos conseguiu-se uma melhoria média de cerca de 30\%.
+
+A Figura \ref{fig_graph_melhoria_por_custo} conta também com duas linhas de tendência lineares simbolizando a evolução do custo em uma rede comum (sem a utilização do BSN), representada pela linha ``Linear (Custo original)'' e em uma rede após a utilização do BSN, representada pela linha ``Linear (Custo médio final)''. As equações de reta de cada uma das linhas de tendência estão presentes na Figura \ref{fig_graph_melhoria_por_custo} e são novamente representadas por conveniência nas Equações \ref{eq-reta}, representando a evolução do custo em uma rede sem a utilização do BSN frente ao aumento do número de saltos, e \ref{eq-reta-bsn}, representando a evolução do custo em uma rede após a utilização do BSN frente ao aumento do número de saltos na topologia original.
+
+\begin{equation}
+y = x
+\label{eq-reta}
+\end{equation}
+
+\begin{equation}
+y = 0,7222x + 0,918
+\label{eq-reta-bsn}
+\end{equation}
+
+\begin{equation}
+\alpha = \tan ^{-1}(a)\therefore \alpha =\tan ^{-1}(0,7222)\approx 35,84^{\circ}
+\label{eq-coeficiente-angular}
+\end{equation}
+
+Substituindo-se \ref{eq-reta} em \ref{eq-reta-bsn} tem-se que o ponto de encontro das duas retas é em 3,3 representando o ponto de inflexão na utilização do protocolo. Ou seja, conforme já mencionado, à partir de 3 saltos de custo o BSN começa a fornecer resultados mais vantajosos do que os obtidos na rede original. Além disso, pode-se utilizar a Equação \ref{eq-reta-bsn} para prever o custo médio alcançado em ramos de rede mais compridos que os avaliados, visto que o coeficiente angular desta reta representa um ângulo menor que 45 graus conforme representado na Equação \ref{eq-coeficiente-angular}, pode-se perceber que o custo alcançado através da utilização do BSN tende a ser sempre e cada vez menor com relação ao custo da rede original. A mesma conclusão é obtida através da análise da Figura \ref{fig_graph_melhoria_por_custo}.
 
 \subsection{Limitações}
-Comentar sobre estar usando apenas um optsw e sobre a opcao única de ligar a primeira fibra na ultima
+O protocolo aqui apresentado tem o caráter de prova de conceito, sendo desta forma passível de aperfeiçoamentos. Em outras palavras existem limitações que, se resolvidas devem fazer com que o protocolo apresente resultados ainda melhores do mostrados. As limitações aqui discutidas são decorrentes do cenário de aplicação considerado, sendo desta que desta forma não estão ligadas diretamente com a proposta apresentada mas sim com os resultados obtidos.
+
+O perfil de rede de comunicação considerado na presente proposta costuma ser instalado em ambientes físicos não favoráveis a manutenção (equipamentos no alto de poste sem sistema de ventilação e costumeiramente expostos à intempéries). Somando-se a isso o fato de que possíveis problemas técnicos relacionados com a infraestrutura deste tipo de redes pode acarretar em grandes prejuízos monetários resulta-se em administradores de rede extremamente conservadores com relação à manutenções e/ou pontos de falha. Desta forma, previu-se a utilização de apenas um chaveador óptico por equipamento, o que em si não acarreta maiores problemas visto que de acordo com a distribuição de probabilidades de interconexão utilizada (Figura \ref{fig_dist_prob}) 98\% dos equipamentos encontrados em campo devem ter a disponibilidade de no máximo 4 conexões ópticas. Logo, caso um destes equipamentos tivesse mais de um chaveador óptico acionado ao mesmo tempo ele perderia a conexão com a rede, sendo impossível acessá-lo novamente. A Figura \ref{fig_2optsw} representa este estado.
+
+\begin{figure}[t!]
+	\centering
+	\begin{subfigure}[t]{0.4\textwidth}
+		\centering
+		\includegraphics[height=7cm]{./figuras/2-opt-sw-off.png} % <- formatos PNG, JPG e PDF
+		\caption{2 chaveadores desligados}
+		\label{fig_2optsw_off}
+	\end{subfigure}%
+	~
+	\begin{subfigure}[t]{0.4\textwidth}
+		\centering
+		\includegraphics[height=7cm]{./figuras/2-opt-sw-on.png} % <- formatos PNG, JPG e PDF
+	\caption{2 chaveadores ligados}
+	\label{fig_2optsw_on}
+	\end{subfigure}
+	\caption[Multiplicidade de chaveadores ópticos]{Representação da utilização de mais de um chaveador óptico em equipamentos contando com apenas 4 portas ópticas. Em \ref{fig_2optsw_off} pode-se ver que o sinal de todas as fibras é encaminhado para o equipamento normalmente, em contrapartida na situação retratada em \ref{fig_2optsw_on} todos os sinais de entrada são redirecionados impedindo que o equipamento receba qualquer informação.}
+	\label{fig_2optsw}
+\end{figure}
+
+Neste sentido, ao mesmo tempo que a utilização de apenas um chaveador óptico representa o estilo conservador marcante no cenário utilizado, também configura uma limitação na utilização do protocolo visto que para cada equipamento em campo existe apenas uma opção de acionamento de chaveador óptico, reduzindo assim pela metade o universo de possíveis novas topologias a serem formadas pelo BSN.
+
+Além disso, outra importante limitação advinda da utilização de apenas um chaveador óptico é a obrigatoriedade de interconectar, quando necessário, sempre as mesmas portas ópticas. O que também provoca a mesma limitação citada de diminuir o universo de possíveis novas topologias.
