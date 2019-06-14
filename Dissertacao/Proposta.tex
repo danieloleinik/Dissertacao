@@ -449,6 +449,7 @@ Baseando-se na conclusão de que a influência da valência no desempenho do BSN
 \end{figure}
 
 \subsection{Melhoria de custo Individual}
+\label{melhoria-custo-individual}
 O BSN foi desenvolvido para redução de latência através da minimização do número de saltos considerando toda a rede avaliada, mas conforme explicitado em \ref{subsection-custo-da-rede}, além de significativa melhora no custo total da rede, o BSN também apresenta um ótimo resultado ao avaliar-se o custo individual para comunicação entre o nó central e cada um dos demais. De maneira geral, o algoritmo pode ser aplicado para diferentes objetivos de acordo com a função de \emph{fitness} utilizada, sendo que no presente caso esse valor é calculado conforme apresentado na Equação \ref{eq-fitness}.
 
 Dessa maneira, mudando o enfoque utilizado em \ref{melhoria-custo-total} para a análise dos resultados e avaliando os custos unitários de cada rota pode-se obter o gráfico apresentado na Figura \ref{fig_graph_melhoria_por_custo}.
@@ -460,7 +461,14 @@ Dessa maneira, mudando o enfoque utilizado em \ref{melhoria-custo-total} para a 
 	\label{fig_graph_melhoria_por_custo}
 \end{figure}
 
-Para a geração da Figura \ref{fig_graph_melhoria_por_custo} foram consideradas todas as redes geradas pelo programa de simulação para abastecer o BSN conforme descrito em \ref{melhoria-custo-total}. Cada uma das conexões (ramos do grafo que realizam a interconexão entre o vértice origem e cada um dos destinos) de cada uma das redes foi avaliada e catalogada segundo seu custo, considerado neste documento como sendo igual ao número de saltos. Após este passo, o custo resultante para cada um dos destinos dessas conexões, após a otimização do BSN, foi avaliado. Dessa forma é possível saber a performance do BSN através da comparação de todos os destinos cujos custos no grafo da rede original eram de 1, 2, 3 e assim por diante frente aos novos custos obtidos nas redes resultantes após a aplicação do BSN.
+Para a geração da Figura \ref{fig_graph_melhoria_por_custo} foram consideradas todas as redes geradas pelo programa de simulação para abastecer o BSN conforme descrito em \ref{melhoria-custo-total}. Cada uma das conexões (ramos do grafo que realizam a interconexão entre o vértice origem e cada um dos destinos) de cada uma das redes foi avaliada e catalogada segundo seu custo, considerado neste documento como sendo igual ao número de saltos, conforme mostrado na Figura \ref{fig_graph_ramos_custo}. Após este passo, o custo resultante para cada um dos destinos dessas conexões, após a otimização do BSN, foi avaliado. Dessa forma é possível saber a performance do BSN através da comparação de todos os destinos cujos custos no grafo da rede original eram de 1, 2, 3 e assim por diante frente aos novos custos obtidos nas redes resultantes após a aplicação do BSN.
+
+\begin{figure} [ht]% normalmente utilizar [!t]
+	\centering
+	\includegraphics[width=1\textwidth]{./figuras/ramos-custo.png} % <- formatos PNG, JPG e PDF
+	\caption[Ramos x Custo]{Gráfico ilustrativo da quantidade de ramos gerados considerando todas as redes utilizadas com relação ao custo de cada um deles.}
+	\label{fig_graph_ramos_custo}
+\end{figure}
 
 Seguindo esta premissa, na Figura \ref{fig_graph_melhoria_por_custo}, as barras denominadas de ``Custo original'' representam o custo dos ramos do grafo avaliados antes da utilização do BSN, enquanto as barras denominadas de ``Custo médio final'' representam a média de todos os custos resultantes após a utilização do BSN. Pode-se notar que para custos muito baixos o BSN, de modo geral, pode apresentar um resultado pior do que o da rede original, mas essa situação muda drasticamente para custos maiores, na verdade à partir de 3 saltos entre origem e destino o BSN passa a resultar em vantagem quando comparado à rede original.
 
