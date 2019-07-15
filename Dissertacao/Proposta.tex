@@ -1,13 +1,5 @@
 \chapter{Proposta}
 \label{capitulo_proposta}
-Conforme descrito na seção \ref{cap_protocolos_de_roteamento} um protocolo de roteamento é responsável pelo tratamento e pela dinâmica das mensagens e dados trocados entre os dispositivos participantes da comunicação. Como dinâmica pode-se citar o cálculo de rotas a serem utilizadas e, neste sentido, a proposta do presente documento pode ser considerada como um protocolo para estabelecimento de caminhos ótimos de rede através da manipulação do \emph{layer} físico da rede.
-
-O objetivo é a descoberta e estabelecimento de rotas de comunicação de maneira completamente desagregada do protocolo de roteamento utilizado na rede em questão. O protocolo proposto pode ser utilizado em qualquer rede que contenha multi-caminhos ou redundâncias, apesar de apresentar melhores resultados quando aplicado à redes \emph{mesh} devido a maior possibilidade de recombinações. Para tanto, é necessário que a rede em questão possa ser representada por um grafo simples, ou seja, um grafo que não possui arestas paralelas ou pontas coincidentes (laços).
-
-De maneira geral, uma rede \emph{mesh} apresenta vários possíveis caminhos entre o ponto inicial e destino da comunicação, sendo que em cada um desses pontos existem custos atrelados ao roteamento, encaminhamento e processamento de pacotes para qualquer comunicação neste tipo de topologia. A proposta atua no refino destes custos através do estabelecimento de caminhos específicos/estratégicos para cada enlace.
-
-Basicamente existem dois tipos de equipamentos que podem ser utilizados em redes ópticas, os puramente ópticos e os elétricos. Os equipamentos puramente ópticos possuem custo muito elevado e são muito sensíveis, já que têm a capacidade de realizar o roteamento de luz (baseado no comprimento de onda dos sinais) e por isso não são utilizados em larga escala, normalmente esse tipo de tecnologia pode ser encontrado em alguns filtros e \emph{splitters} especiais. Já os equipamentos elétricos possuem custos muito mais atrativos e são normalmente empregados para roteamento de maneira geral, mas em contrapartida são sensivelmente mais lentos.
-
 Os atrasos existentes em equipamentos elétricos utilizados em redes ópticas têm diversas origens, como o processamento dos dados (intrinsecamente relacionado ao poder de processamento do equipamento) e as conversões de meio necessárias, sendo que para cada equipamento pode-se considerar pelo menos duas dessas conversões (óptica-elétrica-óptica). 
 
 Logo, todas as vezes que um pacote trafega em uma rede óptica acaba sofrendo atrasos, que são traduzidos em forma de latência, em cada um dos nós participantes do circuito. Estes atrasos devem ser somados a fim de determinar a latência total de um enlace. A Figura \ref{fig_latency_link} mostra a acúmulo da latência através de um enlace óptico entre dois pontos. 
@@ -20,11 +12,13 @@ Logo, todas as vezes que um pacote trafega em uma rede óptica acaba sofrendo at
 	\label{fig_latency_link}
 \end{figure}
 
-Logo, a proposta apresentada neste artigo, denominada de \sigla{BSN}{\emph{``Bypass Seletivo de Nós''}} \emph{``Bypass Seletivo de Nós''}, ocupa um lugar intermediário entre os equipamentos puramente ópticos e os ópticos/elétricos. O BSN consiste em um protocolo especificamente desenvolvido para otimização de latência em redes ópticas através da utilização de chaveadores ópticos em pontos estratégicos da rede. Dessa forma equipamentos em posições específicas da rede podem ser desviados sem a necessidade de nenhuma conversão de meio ou mesmo processamento, resultando na mínima inserção de latência possível. 
+Logo, a proposta apresentada neste artigo, denominada de \sigla{BSN}{\emph{``Bypass Seletivo de Nós''}} \emph{``Bypass Seletivo de Nós''}, ocupa um lugar intermediário entre os equipamentos puramente ópticos e os ópticos/elétricos. Conforme descrito na seção \ref{cap_protocolos_de_roteamento} um protocolo de roteamento é responsável pelo tratamento e pela dinâmica das mensagens e dados trocados entre os dispositivos participantes da comunicação. Como dinâmica pode-se citar o cálculo de rotas a serem utilizadas e, desta forma pode-se configurar o BSN como um protocolo especificamente desenvolvido para otimização de latência em redes ópticas através da utilização de chaveadores ópticos em pontos estratégicos da rede, ou seja, através da manipulação do \emph{layer} físico da rede. Dessa forma equipamentos em posições específicas da rede podem ser desviados sem a necessidade de nenhuma conversão de meio ou mesmo processamento, resultando na mínima inserção de latência possível. 
+
+O BSN opera de maneira completamente desagregada do protocolo de roteamento utilizado na rede em questão. Ele pode ser utilizado em qualquer rede que contenha multi-caminhos ou redundâncias de maneira a possibilitar a criação de novas topologias a partir da reorganização das ligações físicas. Para tanto, é necessário que a rede em questão possa ser representada por um grafo simples, ou seja, um grafo que não possui arestas paralelas ou pontas coincidentes (laços) conforme anteriormente descrito em \ref{chap_grafos}.
 
 Os pontos da rede de acionamento do chaveador óptico podem ser escolhidos em ramos de um grafo com muitos vértices (\emph{hops}) ou podem ser planejados para o estabelecimento de rotas específicas para comunicação com pontos críticos do sistema, estabelecendo um \sigla{SLA}{\emph{Service Level Agreement}} em \emph{layer} físico.
 
-Através da utilização do BSN é possível reduzir o grafo da rede possibilitando uma nova configuração de conexões e consequentemente uma nova variedade de rotas possíveis. Cada vez que o BSN ativa um \emph{bypass}, as duas arestas envolvidas são unificadas evitando o vértice das mesmas, criando assim um novo grafo com uma distância entre os dois vértices finais de um vértice a menos, como representado na Figura \ref{fig-bypass-exemplo}. Dessa forma, em caso de falha ou mudança de SLA, a topologia física pode ser alterada automaticamente.
+Através da utilização do BSN é possível reduzir o grafo da rede possibilitando uma nova configuração de conexões inexistente na rede original e consequentemente uma nova variedade de rotas possíveis. Cada vez que o BSN ativa um \emph{bypass}, as duas arestas envolvidas são unificadas evitando o vértice das mesmas, criando assim um novo grafo com uma distância entre os dois vértices finais de um vértice a menos, como representado na Figura \ref{fig-bypass-exemplo}. Dessa forma, em caso de falha ou mudança de SLA, a topologia física pode ser alterada automaticamente.
 
 \begin{figure}[t!]
 	\centering
@@ -45,46 +39,63 @@ Através da utilização do BSN é possível reduzir o grafo da rede possibilita
 	\label{fig-bypass-exemplo}
 \end{figure}
 
-\section{Computação Evolucional e Inteligência Artificial}
-Comumente conhecida como \sigla{IA}{Inteligência Artificial} (Inteligência Artificial) ou \sigla{AI}{\emph{Artificial Intelligence}} (\emph{Artificial Intelligence}, a Inteligência Artificial pode ser considerada como um campo de pesquisa multidisciplinar ligado ao desenvolvimento e investigação de sistemas inteligentes \cite{Book-Brownlee2011}. Segundo \cite{Book-Russel2009} a IA pode ser dividida em 4 categorias: sistemas que pensam como humanos, sistemas que agem como humanos, sistemas que pensam com razão e sistemas que agem com razão.
-
-Um dos campos comumente relacionados à IA é a Computação Evolucionária ou \sigla{CE}{Computação Evolucionária}, que foi inicialmente concebida por Lawrence J. Fogel em meados de 1960 e pode ser representada como a junção de diferentes abordagens de simulação de aspectos da evolução. Todas estas abordagens envolvem aspectos em comum como reprodução, aleatoriedade ou mutação, competição e seleção. Até o surgimento da CE a IA estava, em sua maioria, focada em heurísticas e simulações de redes neurais primitivas. Abordagens estas que mostravam-se, segundo Fogel, limitadas já que produzem modelos muito mais próximos de um comportamento humano do que de um processo envolvido na criação de indivíduos ou intelectos (evolução) \cite{Book-Back2000}.
-
-De maneira geral a evolução é um processo de otimização, o que definitivamente não implica em perfeição, aliado à grande robustez de adaptação visto que o mundo real nunca é estático \cite{Book-Back2000}.
-
-Uma das classes dos algoritmos evolucionários mais difundidas e utilizadas são os Algoritmos Genéticos ou \sigla{AG}{Algoritmos Genéticos}. Estes algoritmos são caracterizados por serem uma técnica de otimização global através de estratégias adaptativas. Eles são assim chamados por serem inspirados na genética e evolução de populações e por isso se utilizam de nomenclaturas como \emph{cromossomos, genes, recombinação, mutação, etc} \cite{Book-Brownlee2011}.
-
-De maneira básica e generalista pode-se dizer que uma população inicial de indivíduos devidamente correlacionados com o problema em questão é gerada, normalmente de maneira aleatória, e cada indivíduo é avaliado separadamente estabelecendo um \emph{ranking} (normalmente chamado de \emph{fitness}) dos mais adaptados ao problema sob análise. Então, alguns indivíduos da população são selecionados para reprodução, sendo que os indivíduos mais adaptados usualmente recebem mais chances de participar deste processo. Além disso, também existe a mutação que visa alterar o conteúdo genético de um indivíduo aleatoriamente, diferenciando-o de seus pais. Para o surgimento da nova geração os indivíduos gerados (filhos) devem ser unidos aos seus pais e deve existir um método de seleção de indivíduos a fim de evitar o aumento descontrolado da população \cite{Book-Back2000}. Existem diversas técnicas diferentes para cada um dos passos acima descritos, cada uma delas deve influenciar o algoritmo de maneira diferente (tempo de execução, utilização de memória, processamento utilizado, etc) mas apesar de não existirem garantias, em qualquer um dos casos espera-se encontrar o valor ótimo para a função avaliada. O Algoritmo \ref{pseudocode_AG} é uma representação em alto nível da estratégia básica de um AG. 
-
-\begin{algorithm} [h]
-\caption{ - Exemplo de alto nível para AG}
-\begin{algorithmic}[1]
-\State $Population\gets \textit{InitializePopulation}$
-\State EvaluatePopulation(Population);
-\State $Sbest\gets \textit{GetBestSolution(Population)}$
-\While {$ StopCondition() $}
-\State $Parents\gets \textit{SelectParents(Population,PopulationSize)}$
-\State $Children\gets 0$
-\ForEach {$Parent1, Parent2 \in Parents $}
-\State $Child1, Child2 \gets Crossover(Parent1, Parent2)$
-\State $Children \gets Mutate(Child1)$
-\State $Children \gets Mutate(Child2)$
-\EndFor
-\State EvaluatePopulation(Children);
-\State $Sbest\gets \textit{GetBestSolution(Children)}$
-\State $Population\gets \textit{Replace(Population,Children)}$
-\EndWhile
-\State\Return Sbest
-\end{algorithmic}
-\fonte{Adaptado de \cite{Book-Brownlee2011}}
-\label{pseudocode_AG}
-\end{algorithm}
-
-
-%Inserir descrição sobre Inteligencia artificial e algoritmos genéticos
-
 \section{BSN}
-O método de redução do grafo de rede utilizado pelo BSN é descrito sucintamente em alto nível através do pseudocódigo representado no Algoritmo \ref{pseudocode_bsn}. O BSN utiliza vários conceitos de otimização simultâneos. A ideia básica é a utilização de um algoritmo genético para a criação de diferentes combinações de estado dos chaveadores óticos na rede (de acordo com as premissas de projeto a serem adotadas). Dessa forma, cada uma das combinações geradas pelo algoritmo genético acaba por gerar uma nova topologia de conexões físicas, que são por sua vez otimizadas buscando obter a rede menos profunda possível. Para o passo representado na linha \ref{bsn:fitness_line} do Algoritmo \ref{pseudocode_bsn} (busca local), pode ser utilizado qualquer algoritmo conhecido sendo que o presente documento utilizou uma busca de custo uniforme, garantindo assim a obtenção do valor ótimo de \emph{fitness}.
+Esta seção descreve o funcionamento da proposta através de um exemplo simplificado, discorre sobre a implementação do algoritmo utilizado para criação do BSN assim como sobre a ferramenta criada para simulações e criação dos dados utilizados no presente estudo.
+
+\subsection{Funcionamento do BSN}
+Para exemplificar o funcionamento do BSN foi gerada a rede da Figura \ref{BSN-example-network}. Essa rede foi gerada pelo software desenvolvido para avaliação do BSN, posteriormente descrito de maneira detalhada na Seção \ref{implementacao}. Como pode-ser notar essa rede é representada por um grafo simples com valência igual a 3, e pode ser classificada de acordo com o exposto na Seção \ref{redes-de-computadores} com sendo uma rede \emph{mesh}. 
+
+O grafo da Figura \ref{BSN-example-network} foi submetido ao software de simulação para cálculo dos caminhos ótimos para todos os vértices à partir do vértice origem (arbitrariamente escolhido como sendo o 1) e a Figura \ref{BSN-example-network-tree} mostra o resultado desta operação. Esta figura representa os caminhos ótimos para, saindo do vértice raiz, alcançar todos os demais vértices. Deste modo, grafo da Figura \ref{BSN-example-network-tree} representa o melhor caso possível em termos de profundidade de rede.
+
+Após as melhores rotas terem sido descobertas conforme descrito, a rede da Figura \ref{BSN-example-network} foi submetida ao software de simulação para a execução do BSN. Como resultado decidiu-se pelo acionamento do chaveador óptico no vértice 7, interligando o vértice 1 diretamente ao 4 gerando um novo grafo da rede conforme representado na Figura \ref{BSN-example-opt-switch}. Este grafo, quando submetido ao cálculo dos caminhos ótimos, assim como realizado com a rede original, resulta no grafo da Figura \ref{BSN-example-rede-otimizada}, onde pode-se notar a diminuição da profundidade em comparação com aquele mostrado na Figura \ref{BSN-example-network-tree}.
+
+\begin{figure}[t!]
+	\centering
+	\begin{subfigure}[t]{0.4\textwidth}
+		\centering
+		\includegraphics[width=4cm]{./figuras/BSN-ex-network-generation.png} % <- formatos PNG, JPG e PDF
+		\caption{Rede gerada}
+		\label{BSN-example-network}
+	\end{subfigure}%
+	~
+	\begin{subfigure}[t]{0.4\textwidth}
+		\centering
+		\includegraphics[width=4cm]{./figuras/BSN-ex-network-generation-tree.png} % <- formatos PNG, JPG e PDF
+	\caption{Árvore da Rede}
+	\label{BSN-example-network-tree}
+	\end{subfigure}
+	~
+	\begin{subfigure}[t]{0.4\textwidth}
+		\centering
+		\includegraphics[width=4cm]{./figuras/BSN-ex-bypass.png} % <- formatos PNG, JPG e PDF
+	\caption{Chaveador óptico ativado}
+	\label{BSN-example-opt-switch}
+	\end{subfigure}
+	~
+	\begin{subfigure}[t]{0.4\textwidth}
+		\centering
+		\includegraphics[width=4cm]{./figuras/BSN-ex-network-final.png} % <- formatos PNG, JPG e PDF
+	\caption{Rede resultante}
+	\label{BSN-example-rede-otimizada}
+	\end{subfigure}
+	\caption[Exemplo de funcionamento do BSN]{Exemplo de funcionamento do protocolo BSN. Percebe-se que o BSN consegue reduzir a profundidade de uma rede gerando uma nova possibilidade de conexões através da manipulação da camada física da mesma.}
+	\label{fig-bsn-exemplo}
+\end{figure}
+
+Este exemplo ilustra, em uma rede de apenas 8 nós, o funcionamento do protocolo proposto (BSN). É possível notar que a profundidade da rede, ligada à latência da comunicação, é reduzida impactando na redução de latência para a comunicação entre os nós envolvidos.
+
+\subsection{Implementação}
+\label{implementacao}
+O método de redução do grafo de rede utilizado pelo BSN é descrito sucintamente em alto nível através do fluxograma apresentado na Figura \ref{fig_bsn_flow}, também apresentado de maneira pouco mais detalhada no pseudocódigo representado no Algoritmo \ref{pseudocode_bsn}. O BSN utiliza vários conceitos de otimização simultâneos. A ideia básica é a utilização de um algoritmo genético para a criação de diferentes combinações de estado dos chaveadores ópticos na rede (de acordo com as premissas de projeto a serem adotadas). Dessa forma, cada uma das combinações geradas pelo algoritmo genético acaba por gerar uma nova topologia de conexões físicas, que são por sua vez otimizadas buscando obter a rede menos profunda possível. 
+
+Esta busca compreende, em essência, a escolha de quais arestas do grafo serão utilizadas para estabelecer a comunicação entre os nós e quais não serão utilizadas. Dessa forma, para o passo representado na linha \ref{bsn:fitness_line} do Algoritmo \ref{pseudocode_bsn} (busca local), que representa exatamente este passo do código, pode ser utilizado qualquer algoritmo conhecido. Daí vem o fato de o BSN ter a capacidade de ser utilizado com qualquer protocolo padrão de otimização de rede como o STP por exemplo. O presente documento utiliza para este passo uma busca de custo uniforme, garantindo assim a obtenção do valor ótimo de \emph{fitness}, que neste código está relacionado ao custo total da rede. Ou seja, o algoritmo de custo uniforme irá resultar na melhor rede possível para o grafo em questão já que este tipo de busca é exaustiva e explora todas as combinações possíveis para então selecionar a melhor delas.
+
+\begin{figure} [t]% normalmente utilizar [!t]
+	\centering
+	\includegraphics[width=1\textwidth]{./figuras/BSN-Flow.png}
+	\caption[Fluxograma do BSN]{Representação de fluxograma em alto nível do funcionamento do BSN}
+	\label{fig_bsn_flow}
+\end{figure}
 
 \begin{algorithm} [h]
 \caption{ - Algoritmo básico do BSN}
@@ -114,4 +125,398 @@ O método de redução do grafo de rede utilizado pelo BSN é descrito sucintame
 \label{pseudocode_bsn}
 \end{algorithm}
 
+\subsubsection{Custo da rede}
+\label{subsection-custo-da-rede}
+O custo da rede é definido como a soma de todos os custos individuais (número de saltos) para comunicação em cada um dos \emph{links} da rede. Logo, utilizando a rede de exemplo representada na Figura \ref{BSN-example-network-tree} tem-se o mostrado na Tabela \ref{tab-custo-rede-BSN-example-network-tree} como sendo os custos individuais para comunicação entre o nó origem e os demais assim como o custo total da rede. Em contrapartida, ao utilizar a rede representada na Figura \ref{BSN-example-rede-otimizada}, que foi otimizada através da utilização do BSN, tem-se como resultado para os custos individuais e custo total o representado na Tabela \ref{tab-custo-rede-bsn-otimizada}.
+
+À partir da comparação dos dados apresentados na Tabela \ref{tab_calc_custo} nota-se que o custo total da rede foi otimizado em aproximadamente 15,4\% (o que por si só já representa um grande ganho) mas, além disso, ao comparar o custo de cada um dos nós de maneira individual pode-se notar que para os destinos 3 e 6 foi alcançado 33,33\% de melhoria e para os destinos 4 e 7 foi alcançado 50\% de melhoria.
+
+Assim fica claro o BSN não apenas minimiza o custo ou latência da rede como um todo mas apresenta, em especial, um ótimo resultado ao avaliar-se o custo de uma rota em específico. Desta forma o protocolo proposto pode ser extremamente útil no estabelecimento de políticas de \sigla{QoS}{\emph{Quality of Service}} em layer físico, sendo esta uma aplicação jamais explorada anteriormente.
+
+\setcounter{table}{1} \renewcommand{\thetable}{\arabic{table}}
+\begin{table}[t!]
+	\centering
+	\begin{subfigure}[t]{0.4\textwidth}
+		\centering
+		%\begin{table}[]
+			\begin{tabular}{llllll}
+			\hline
+			\multicolumn{1}{|l|}{\textbf{Nó destino}} & \multicolumn{4}{c}{\textbf{Caminho}} & \multicolumn{1}{c|}{\textbf{Custo}} \\ \hline
+			\multicolumn{1}{|l|}{\textbf{2:}} & 1 & 2 &  & \multicolumn{1}{l|}{} & \multicolumn{1}{l|}{1} \\ \hline
+			\multicolumn{1}{|l|}{\textbf{3:}} & 1 & 7 & 4 & \multicolumn{1}{l|}{3} & \multicolumn{1}{l|}{3} \\ \hline
+			\multicolumn{1}{|l|}{\textbf{4:}} & 1 & 7 & 4 & \multicolumn{1}{l|}{} & \multicolumn{1}{l|}{2} \\ \hline
+			\multicolumn{1}{|l|}{\textbf{5:}} & 1 & 8 & 5 & \multicolumn{1}{l|}{} & \multicolumn{1}{l|}{2} \\ \hline
+			\multicolumn{1}{|l|}{\textbf{6:}} & 1 & 7 & 4 & \multicolumn{1}{l|}{6} & \multicolumn{1}{l|}{3} \\ \hline
+			\multicolumn{1}{|l|}{\textbf{7:}} & 1 & 7 &  & \multicolumn{1}{l|}{} & \multicolumn{1}{l|}{1} \\ \hline
+			\multicolumn{1}{|l|}{\textbf{8:}} & 1 & 8 &  & \multicolumn{1}{l|}{} & \multicolumn{1}{l|}{1} \\ \hline
+			 & \multicolumn{4}{l}{\textbf{Custo Total}} & \textbf{13}
+			\end{tabular}
+		\caption{Calculo de custo - Rede Figura \ref{BSN-example-network-tree}}
+		\label{tab-custo-rede-BSN-example-network-tree}
+		%\end{table}
+	\end{subfigure}%
+	~
+	\begin{subfigure}[t]{0.4\textwidth}
+		\centering
+			%\begin{table}[]
+			\begin{tabular}{lllll}
+			\hline
+			\multicolumn{1}{|l|}{\textbf{Nó destino}} & \multicolumn{3}{c}{\textbf{Caminho}} & \multicolumn{1}{c|}{\textbf{Custo}} \\ \hline
+			\multicolumn{1}{|l|}{\textbf{2:}} & 1 & 2 & \multicolumn{1}{l|}{} & \multicolumn{1}{l|}{1} \\ \hline
+			\multicolumn{1}{|l|}{\textbf{3:}} & 1 & 4 & \multicolumn{1}{l|}{3} & \multicolumn{1}{l|}{2} \\ \hline
+			\multicolumn{1}{|l|}{\textbf{4:}} & 1 & 4 & \multicolumn{1}{l|}{} & \multicolumn{1}{l|}{1} \\ \hline
+			\multicolumn{1}{|l|}{\textbf{5:}} & 1 & 8 & \multicolumn{1}{l|}{5} & \multicolumn{1}{l|}{2} \\ \hline
+			\multicolumn{1}{|l|}{\textbf{6:}} & 1 & 4 & \multicolumn{1}{l|}{6} & \multicolumn{1}{l|}{2} \\ \hline
+			\multicolumn{1}{|l|}{\textbf{7:}} & 1 & 2 & \multicolumn{1}{l|}{7} & \multicolumn{1}{l|}{2} \\ \hline
+			\multicolumn{1}{|l|}{\textbf{8:}} & 1 & 8 & \multicolumn{1}{l|}{} & \multicolumn{1}{l|}{1} \\ \hline
+			 & \multicolumn{3}{l}{\textbf{Custo Total}} & \textbf{11}
+			\end{tabular}
+	\caption{Calculo de custo - Rede Figura \ref{BSN-example-rede-otimizada}}
+	\label{tab-custo-rede-bsn-otimizada}
+	%\end{table}
+	\end{subfigure}
+	\caption[Exemplo de cálculo de custo total em rede]{Exemplificação do cálculo e comparação entre o custo total para duas redes exemplo}
+	\label{tab_calc_custo}
+\end{table}
+
+\subsubsection{Representação}
+Na Computação Evolutiva de maneira geral é comum encontrar termos da biologia para representar estruturas e variáveis, o mesmo acontece no campo dos AGs, como no caso do BSN. No presente documento a relação entre estes termos é dada conforme o mostrado na Tabela \ref{tab-correlacao-bio-comp}.
+
+\begin{table}[ht]
+\centering
+\begin{tabular}{|l|l|}
+\hline
+\multicolumn{1}{|c|}{\textbf{Biologia}} & \multicolumn{1}{c|}{\textbf{Computação}} \\ \hline
+Cromossomo & Indivíduo \\ \hline
+Gene & Caractere \\ \hline
+Alelo & Valor do caractere \\ \hline
+Lócus & Posição do caractere \\ \hline
+Genótipo & Vetor de caracteres representando o indivíduo \\ \hline
+Fenótipo & Interpretação do vetor de caracteres \\ \hline
+\end{tabular}
+\caption[Biologia x BSN]{Correlação entre vocábulos da Biologia e os utilizados no BSN}
+\label{tab-correlacao-bio-comp}
+\end{table}  
+
+Seguindo estas definições, o BSN cria um conjunto de Cromossomos, denominado de população. Esta população é constituída pelos diversos indivíduos cujos Genótipos estão baseados na rede em questão. Cada um dos Cromossomos é representado como sendo um vetor \emph{booleano} com o número de Genes igual ao número de nós da rede a ser otimizada e onde cada um dos Lócus representa unicamente um nó. Os Alelos por sua vez representam o estado do chaveador ótico no respectivo nó. Em resumo, seguindo esta convenção, pode-se representar a rede mostrada na Figura \ref{BSN-example-opt-switch} através do Cromossomo (ou indivíduo) da Tabela \ref{tab-cromossomo-bsn}.
+
+\begin{table}[ht]
+\centering
+\begin{tabular}{|l|l|l|l|l|l|l|l|l|}
+\hline
+\multicolumn{1}{|c|}{\textbf{Nó}} & \multicolumn{1}{c|}{1} & 2 & 3 & 4 & 5 & 6 & 7 & 8 \\ \hline
+\textbf{Cromossomo} & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 0 \\ \hline
+\end{tabular}
+\caption[Cromossomo BSN]{Repesentação da estrutura básica de um cromossomo do BSN}
+\label{tab-cromossomo-bsn}
+\end{table}
+
+Como pode-se notar cada um dos Lócus do Cromossomo representa um nó da rede, logo tem-se um Cromossomo com 8 Genes visto que a rede tem 8 nós, além disso o Alelo do Lócus 7 é igual a 1, o que pode ser interpretado como a informação de que o chaveador óptico instalado no nó 7 está ligado enquanto os outros estão desligados (Alelos 0). Dessa forma, o Fenótipo deste indivíduo, ou seja, a interpretação deste Cromossomo, indica que o grafo desta rede deve ser representado considerando que o chaveador óptico referente ao nó 7 está acionado e os demais não, como representado na Figura \ref{BSN-example-opt-switch}.
+
+\subsubsection{Função de \emph{Fitness}}
+Como em qualquer AG o BSN baseia seu funcionamento na avaliação de uma função de \emph{fitness}, que conforme brevemente descrito na Seção \ref{implementacao} está atrelada ao custo da rede. De maneira geral, o custo total da rede é calculado conforme descrito em \ref{subsection-custo-da-rede}, com a diferença da necessidade de adoção de uma convenção em caso da avaliação de um grafo desconexo.
+
+Basicamente, a utilização do BSN pode gerar redes específicas onde nem todos os nós sejam acessíveis devido ao acionamento do chaveador óptico em posições inadequadas. Em outras palavras, podem existir Genótipos que dêem origem a redes cujos grafos são desconexos como o da Figura \ref{fig_grafo_desconexo}. Neste caso o custo dessa rede, de acordo com o descrito em \ref{subsection-custo-da-rede} seria infinito, visto que o custo unitário para alcançar o(s) vértice(s) não conectado(s) seria infinito. Logo necessita-se de uma convenção para representar este custo visto que ``infinito'' não pode ser representado computacionalmente. Adotou-se que o custo de um link como o descrito é igual a 1000 (mil unidades de custo), dessa forma o custo total da rede deverá seguir a Equação \ref{eq-fitness}. Como consequência o custo da rede deverá conter uma parcela múltipla de 1000 no caso em que existam um ou mais nós sem conexão com o nó origem. 
+
+\setcounter{equation}{0} \renewcommand{\theequation}{\arabic{equation}}
+\begin{equation}
+\begin{split}
+Fitness_{BSN} = \sum_{n=1}^{x}custo_{1}(n) \rightarrow custo_{orig}(dst)=\left\{\begin{matrix}
+h.p, \textup{para nó conectado}\\ 1000, \textup{para nó desconectado}
+\end{matrix}\right.
+\\onde:\\
+x=\textup{número de nós}
+\\orig=\textup{vértice origem}
+\\dst=\textup{vértice destino}
+\\h=\textup{número de \emph{hops} entre orig e dst}
+\\p=\textup{peso do \emph{hop} em questão (custo do link)}
+\end{split}
+\label{eq-fitness}
+\end{equation}
+
+\subsubsection{\emph{Crossover}}
+O processo de \emph{Crossover} é o responsável pela criação de novos indivíduos, também chamados de filhos, que serão constituintes da nova geração. Existem muitos métodos diferentes que podem ser utilizados para esta operação, a Figura \ref{fig_crossover} exemplifica o método de \emph{Crossover} simples já que este foi o escolhido no BSN.
+
+\begin{figure} [!htb]% normalmente utilizar [!t]
+	\centering
+	\includegraphics[width=1\textwidth]{./figuras/crossover.png}
+	\caption[Exemplo de \emph{Crossover}]{Exemplo de operação de \emph{Crossover} Simples.}
+	\label{fig_crossover}
+\end{figure}
+
+Como pode-se notar dois cromossomos pais são escolhidos e um ponto de corte é definido de maneira aleatória, os cromossomos são então divididos neste ponto de corte e recriados através da troca de informações entre si. Desta forma os cromossomos filhos são gerados através do compartilhamento de informação genética dos pais, criando um novo indivíduo com um novo valor de \emph{fitness}.
+
+\subsubsection{Seleção}
+Paralelamente à Seleção Natural, os AGs utilizam-se de diferentes recursos para selecionar os indivíduos de cada geração mais adaptados ao problema em questão. O BSN utiliza o conceito de \emph{``Roulette Wheel''} \cite{Goldberg1889}. 
+
+Neste tipo de seleção toda a população é avaliada de maneira a criar uma correlação percentual entre o valor de \emph{fitness} de cada um dos indivíduos e sua representatividade perante toda a população. Desse modo pode-se ter um indicativo de quão adaptado cada um deles é com relação a sua geração corrente, e então é possível criar uma distribuição de probabilidades para a escolha de cada um dos mesmos no processo de reprodução.
+
+Seguindo esse critério os pais, que irão fornecer o código genético para a nova geração, deverão potencialmente ser os mais adaptados ao problema em questão aumentando a chance de criar descendentes ainda mais adaptados e, desta forma, acelerando a convergência do algoritmo. A Tabela \ref{tab-selecao} exemplifica este critério de seleção, conforme pode-se ver o indivíduo $\beta$ possui um \emph{fitness} que corresponde a um índice de adaptabilidade ao problema proposto de 43,44\%, logo ele possui 44,33\% de chances de ser escolhido para reprodução enquanto o indivíduo $\alpha$ possui apenas 11,33\% de chance de ser escolhido.
+
+\begin{table}[ht]
+\centering
+\begin{tabular}{|l|l|l|}
+\hline
+\multicolumn{1}{|c|}{\textbf{Indivíduo}} & \multicolumn{1}{c|}{\textbf{\emph{Fitness}}} & \textbf{Percentual do Total} \\ \hline
+\textbf{$\alpha$} & 34 & 11,33\% \\ \hline
+\textbf{$\beta$} & 130 & 43,33\% \\ \hline
+\textbf{$\delta$} & 66 & 22\% \\ \hline
+\textbf{$\theta$} & 70 & 23,33 \\ \hline
+\textbf{Total} & \textbf{300} & \textbf{100\%} \\ \hline
+\end{tabular}
+\caption[\emph{``Roulette Wheel''}]{Exemplo de aplicação do Método de Seleção \emph{``Roulette Wheel''}}
+\label{tab-selecao}
+\end{table}
+
+\subsubsection{Dimensão das Populações}
+O sucesso de qualquer AG está intrinsecamente relacionado ao tamanho de sua população inicial e das subsequentes gerações. Caso a quantidade de indivíduos em cada uma delas seja muito grande ou muito pequena a evolução dos mesmos pode ser comprometida. Segundo \cite{Goldberg1889} estes parâmetros devem ser estabelecidos empiricamente baseados na disponibilidade dos recursos computacionais utilizados.
+
+Para as simulações do BSN foram utilizadas populações de 500 indivíduos, este valor mostrou-se suficiente para alcançar valores ótimos de custo em várias redes de teste e foi adotado como padrão para as simulações posteriormente descritas.
+
+\subsubsection{Parâmetros Adotados}
+\label{parametros}
+Para a utilização do BSN, assim como em qualquer AG, alguns parâmetros básicos precisam ser configurados. A Tabela \ref{tab-parametros} mostra os parâmetros utilizados nas simulações do BSN apresentadas na Seção \ref{resultados}, esses parâmetros foram selecionados após exaustivas simulações, tendo por objetivo confirmar que seus valores seriam suficientes para alcançar os resultados desejados.
+
+\begin{table}[ht]
+\centering
+\begin{tabular}{|l|l|l|l|l|}
+\hline
+\multicolumn{1}{|c|}{\textbf{\begin{tabular}[c]{@{}c@{}}Tamanho da \\ População\end{tabular}}} & \multicolumn{1}{c|}{\textbf{\begin{tabular}[c]{@{}c@{}}Número de \\ Gerações\end{tabular}}} & \multicolumn{1}{c|}{\textbf{\begin{tabular}[c]{@{}c@{}}Método de escolha\\ de indivíduo para \\ reprodução\end{tabular}}} & \multicolumn{1}{c|}{\textbf{\begin{tabular}[c]{@{}c@{}}Probabilidade de \\ \emph{Crossover}\end{tabular}}} & \multicolumn{1}{c|}{\textbf{\begin{tabular}[c]{@{}c@{}}Probabilidade de \\ Mutação\end{tabular}}} \\ \hline
+500 & 50 & \emph{Roulette Wheel} & 94\% & 0,5\% \\ \hline
+\end{tabular}
+\caption[Parâmetros do BSN]{Parâmetros básicos utilizados no algoritmo do BSN}
+\label{tab-parametros}
+\end{table}
+
+\subsection{Programa de Simulação}
+\label{prog_simulacao}
+No presente documento foram consideradas diversas configurações de rede diferentes, para isso foi criado um software de simulação para abastecer o BSN com as informações necessárias para a geração dos resultados apresentados na Seção \ref{resultados}. O funcionamento do programa de simulação criado para esta tarefa é basicamente descrito pelo fluxograma da Figura \ref{fig_prog_simula}.
+
+\begin{figure} [ht]% normalmente utilizar [!t]
+	\centering
+	\includegraphics[width=0.6\textwidth]{./figuras/programa-simulacao.png}
+	\caption[Fluxograma do Programa de Simulação]{Representação de fluxograma básico do funcionamento do Programa de Simulação criado para o BSN}
+	\label{fig_prog_simula}
+\end{figure}
+
+Como pode-se perceber o objetivo básico do programa é o de proporcionar a execução do BSN à partir de diferentes configurações de rede de maneira automatizada, entretanto um dos passos representados na Figura \ref{fig_prog_simula} envolve a criação automática de grafos e merece atenção especial.
+
+De acordo com o que foi anteriormente explicado neste documento, o BSN foi originalmente desenvolvido para aplicações em redes SG, principalmente considerando o cenário de distribuição de energia elétrica, logo faz-se necessário a análise de topologia deste tipo de rede de maneira a criar um algoritmo capaz de gerar grafos condizentes com a realidade apresentada nestes cenários.
+
+De acordo com \cite{Conf-Sood2009}, tipicamente existem dois cenários em aplicações SG para distribuição de energia elétrica: um ambiente rural pouco populado ou um ambiente urbano densamente populado e naturalmente conectado em malha. No caso do ambiente rural o desempenho do BSN, obviamente, pode não apresentar grandes benefícios, visto que as redes de comunicação utilizadas nestes cenários devem dificilmente apresentar alguma redundância. Em contrapartida, as redes presentes nos grandes centros urbanos (densamente populados e naturalmente conectadas em malha) são o objetivo principal da presente proposta.
+
+De maneira geral as redes de distribuição de energia elétrica seguem a topologia da cidade em que são instaladas, ou seja, a disposição das ruas por onde passam. Desta forma fica fácil perceber que as interligações entre equipamentos irão também estar dispostas de acordo com essa premissa. A Figura \ref{fig_esquinas} apresenta algumas das possibilidades mais comuns de disposição de ruas por onde a rede de distribuição deve passar.
+
+\begin{figure}[t!]
+	\centering
+	\begin{subfigure}[t]{0.4\textwidth}
+		\centering
+		\includegraphics[width=2cm]{./figuras/esquinas1.png} % <- formatos PNG, JPG e PDF
+		\caption{Rua sem cruzamento.}
+		\label{fig_esquinas1}
+	\end{subfigure}%
+	~
+	\begin{subfigure}[t]{0.4\textwidth}
+		\centering
+		\includegraphics[width=3.5cm]{./figuras/esquinas2.png} % <- formatos PNG, JPG e PDF
+	\caption{Esquina comum.}
+	\label{fig_esquinas2}
+	\end{subfigure}
+	~
+	\begin{subfigure}[t]{0.4\textwidth}
+		\centering
+		\includegraphics[width=4cm]{./figuras/esquinas3.png} % <- formatos PNG, JPG e PDF
+	\caption{Cruzamento em ``T''.}
+	\label{fig_esquinas3}
+	\end{subfigure}
+	~
+	\begin{subfigure}[t]{0.4\textwidth}
+		\centering
+		\includegraphics[width=4cm]{./figuras/esquinas4.png} % <- formatos PNG, JPG e PDF
+	\caption{Cruzamento clássico.}
+	\label{fig_esquinas4}
+	\end{subfigure}
+	~
+	\begin{subfigure}[t]{0.4\textwidth}
+		\centering
+		\includegraphics[width=4cm]{./figuras/esquinas5.png} % <- formatos PNG, JPG e PDF
+	\caption{Cruzamento em asterisco.}
+	\label{fig_esquinas5}
+	\end{subfigure}
+	\caption{Tipos comuns de cruzamento}
+	\label{fig_esquinas}
+\end{figure}
+
+As ruas como a representada na Figura \ref{fig_esquinas1} podem conter equipamentos ligados em série ou, eventualmente, equipamentos ``terminais'' que possuam apenas uma conexão com o resto do \emph{grid} como no caso de uma rua sem saída por exemplo. Esse padrão de interligação não muda muito ao considerar ruas como a representada na Figura \ref{fig_esquinas2}. No caso dos cruzamentos como o representado na Figura \ref{fig_esquinas3} fica fácil perceber que podem ser instalados equipamentos com até 3 caminhos redundantes em fibra-óptica, este número aumenta para 4 caminhos redundantes em cruzamentos similares ao da Figura \ref{fig_esquinas4} e 5 para os da Figura \ref{fig_esquinas5}. 
+
+Obviamente a Figura \ref{fig_esquinas} não representa todos os tipos de cruzamentos possíveis e podem ser encontrados outras topologias aqui não mostradas. Entretanto é importante lembrar que para o objetivo específico a que se propõe o presente trabalho, uma redundância de rota pode ser literalmente traduzida como uma redundância de caminho. Ou seja, em um cruzamento como o representado na Figura \ref{fig_esquinas3} não faz sentido utilizar um equipamento com mais de 3 interconexões lógicas visto que neste caso 2 delas deveriam obrigatoriamente chegar ao equipamento utilizando a mesma via de acesso. Isso representaria uma grande falha de projeto, visto que a redundância oferecida por esta conexão extra seria completamente ineficaz no caso de um acidente como o rompimento de um cabo ou apagão. O mesmo princípio se aplica aos demais cruzamentos.
+
+Desta forma, pode-se considerar que para o tipo de rede a que o BSN se propõe, as interconexões entre os equipamentos devem seguir uma distribuição de probabilidades que represente as características físicas da cidade alvo. Com este intuito, foi realizada a análise de algumas redes SG reais brasileiras resultando na distribuição de probabilidades representada na Figura \ref{fig_dist_prob}, esta distribuição foi a utilizada no software de simulação para a geração dos grafos a serem utilizados no presente documento.
+
+\begin{figure} [ht]% normalmente utilizar [!t]
+	\centering
+	\includegraphics[width=0.85\textwidth]{./figuras/Distribuicao-prob.png}
+	\caption[Distribuição de probabilidade]{Distribuição de probabilidade de interligação de equipamentos em redes SG de distribuição de energia elétrica}
+	\label{fig_dist_prob}
+\end{figure}
+
+Em outras palavras, a geração de grafos utilizadas para a simulação do BSN seguiu a distribuição de probabilidades apresentada na Figura \ref{fig_dist_prob} para determinar a valência máxima e a probabilidade de ocorrência de cada uma delas nos grafos gerados, visando dessa forma representar com maior fidedignidade as redes SG reais.
+
 \section{Resultados}
+\label{resultados}
+\subsection{Melhoria de custo total}
+\label{melhoria-custo-total}
+Para avaliação da performance do BSN foram utilizadas redes criadas aleatoriamente seguindo as premissas de distribuição de probabilidade descritas em \ref{prog_simulacao}. O programa de simulação foi configurado para gerar redes de 5 a 100 nós com passo incremental de 5 unidades, ou seja, foram geradas redes de 5, 10, 15 e assim sucessivamente até 100 nós. Além disso em todas as dimensões de rede foram geradas pelo menos 3 amostras onde uma delas foi limitada a grafos com valência máxima de 3 conexões, a outra com valência máxima de 4 e por fim 5 conexões, tendo por objetivo avaliar a utilização do protocolo proposto diante ao aumento de interconexões máximas em cada nó. É importante notar que o parâmetro alterado em cada um dos casos citados é o de valência máxima, ou seja, apesar de ainda seguir a distribuição de probabilidade de interconexões mostrada em \ref{prog_simulacao}, que representa a topologia física de uma cidade (e que por consequência não é facilmente alterável), simula-se desta forma a utilização de equipamentos com menor número de conexões do que o possível. Fato este recorrente no mundo real devido a limitações de orçamento ou dificuldades de lançamento/instalação de fibras ópticas, ou seja, mesmo em situações onde existe a possibilidade de conexão com vários equipamentos elas não são necessariamente realizadas. Por fim, cada uma das redes foi submetida à execução do BSN configurado com os parâmetros descritos em \ref{parametros}.
+
+A melhoria percentual do custo total da rede foi representada, por questões de facilidade de visualização, para apenas 5 execuções do software de simulação (para cada execução são geradas 60 redes aleatoriamente seguindo as premissas anteriormente expostas) nas Figuras \ref{fig_graph_bsn_val3} a \ref{fig_graph_bsn_val5}.
+
+%\begin{figure}[t!]
+	%\centering
+	%\begin{subfigure}[t]{0.45\textwidth}
+		%\centering
+		%\includegraphics[width=8cm]{./figuras/BSN-valencia3-5exec-grafico.png} % <- formatos PNG, JPG e PDF
+		%\caption{Valência máxima 3.}
+		%\label{fig_graph_bsn_val3}
+	%\end{subfigure}%
+	%~
+	%\begin{subfigure}[t]{0.45\textwidth}
+		%\centering
+		%\includegraphics[width=8cm]{./figuras/BSN-valencia4-5exec-grafico.png} % <- formatos PNG, JPG e PDF
+	%\caption{Valência máxima 4.}
+	%\label{fig_graph_bsn_val4}
+	%\end{subfigure}
+	%~
+	%\begin{subfigure}[t]{0.45\textwidth}
+		%\centering
+		%\includegraphics[width=8cm]{./figuras/BSN-valencia5-5exec-grafico.png} % <- formatos PNG, JPG e PDF
+	%\caption{Valência máxima 5.}
+	%\label{fig_graph_bsn_val5}
+	%\end{subfigure}
+	%\caption[Melhoria de custo máximo]{Percentual de melhoria no parâmetro de custo máximo da rede após aplicação do BSN variando a valência máxima do grafo}
+	%\label{fig_graph_bsn_5exec_melhoria}
+%\end{figure}
+
+\begin{figure} [ht]% normalmente utilizar [!t]
+	\centering
+	\includegraphics[width=0.8\textwidth]{./figuras/BSN-valencia3-5exec-grafico.png} % <- formatos PNG, JPG e PDF
+		\caption[Melhoria de custo máximo com valência 3]{Percentual de melhoria no parâmetro de custo máximo da rede após aplicação do BSN considerando valência máxima 3.}
+		\label{fig_graph_bsn_val3}
+\end{figure}
+
+\begin{figure} [ht]% normalmente utilizar [!t]
+	\centering
+	\includegraphics[width=0.8\textwidth]{./figuras/BSN-valencia4-5exec-grafico.png} % <- formatos PNG, JPG e PDF
+		\caption[Melhoria de custo máximo com valência 4]{Percentual de melhoria no parâmetro de custo máximo da rede após aplicação do BSN considerando valência máxima 4.}
+		\label{fig_graph_bsn_val4}
+\end{figure}
+
+\begin{figure} [ht]% normalmente utilizar [!t]
+	\centering
+	\includegraphics[width=0.8\textwidth]{./figuras/BSN-valencia5-5exec-grafico.png} % <- formatos PNG, JPG e PDF
+	\caption[Melhoria de custo máximo com valência 5]{Percentual de melhoria no parâmetro de custo máximo da rede após aplicação do BSN considerando valência máxima 5.}
+	\label{fig_graph_bsn_val5}
+\end{figure}
+
+Pode-se notar que para todos os casos os resultados de melhoria de percentual no custo total da rede tiveram grande variação, visto que as redes submetidas ao BSN foram completamente diferentes entre si. Desta forma pode-se afirmar que o comportamento do protocolo, como esperado, está intrinsecamente relacionado à topologia da rede original, visto que é esta topologia que irá gerar novos grafos quando do acionamento dos chaveadores ópticos. Sendo assim pode-se extrair, dentre todas as execuções, o pior e melhor caso de atuação do protocolo, representado na Figura \ref{fig_graph_bsn_pior_melhor}.
+
+\begin{figure} [ht]% normalmente utilizar [!t]
+	\centering
+	\includegraphics[width=0.8\textwidth]{./figuras/BSN-pior-melhor-exec.png} % <- formatos PNG, JPG e PDF
+	\caption[Limites de melhoria alcançados]{Gráfico percentual comparativo entre os melhores e os piores resultados de melhoria alcançados utilizando o BSN.}
+	\label{fig_graph_bsn_pior_melhor}
+\end{figure}
+
+Como pode-se perceber algumas redes avaliadas foram tão desfavoráveis à aplicação do BSN que não apresentaram nenhuma melhoria, este é o caso mostrado na curva da pior performance da Figura \ref{fig_graph_bsn_pior_melhor} para 5 e 15 nós. De maneira geral é fácil imaginar redes onde esse comportamento seja esperado, como aquelas em que não existam muitas redundâncias ou que eventualmente contenham grandes trechos em série (trechos com equipamentos que possam ser representados no grafo da rede por vértices de valência 2). Obviamente a probabilidade de se gerar uma rede como estas com um menor número de nós é muito maior do que considerando um grande número de nós, fato este que pode ser verificado no presente estudo visto que nenhuma rede maior apresentou o mesmo ``pior'' desempenho.
+
+Em contrapartida, ainda analisando-se o gráfico da Figura \ref{fig_graph_bsn_pior_melhor}, pode-se notar um percentual de melhoria extremamente alto para redes propícias a multipercursos, podendo chegar em alguns a casos a níveis ao redor de 45\% de melhoria considerando-se o custo total da rede antes e depois da utilização do BSN. %falar sobre res medios e tamanho da rede
+
+A Figura \ref{fig_graph_bsn_medio} mostra os resultados médios obtidos com os resultados das mesmas 5 execuções software de simulação que geraram as Figuras \ref{fig_graph_bsn_val3} a \ref{fig_graph_bsn_val5}. Como pode-se observar o desempenho do BSN é muito mais afetado pelo número de nós do que pela valência máxima do grafo utilizado.
+
+\begin{figure} [ht]% normalmente utilizar [!t]
+	\centering
+	\includegraphics[width=0.8\textwidth]{./figuras/BSN-resultados-medios.png} % <- formatos PNG, JPG e PDF
+	\caption[Melhoria de custo x valência]{Gráfico percentual comparativo de resultados médios de melhoria de custo total entre redes de diferentes valências.}
+	\label{fig_graph_bsn_medio}
+\end{figure}
+
+Baseando-se na conclusão de que a influência da valência no desempenho do BSN não é relevante pode-se gerar um gráfico que mostre o percentual de melhoria de custo total considerando apenas o número de nós das redes avaliadas. Para isso foram utilizadas 300 redes diferentes resultando no representado na Figura \ref{fig_graph_bsn_medio_all}. Aqui fica claro uma diminuição no percentual de melhoria com o aumento do número de nós da rede utilizada. 
+
+\begin{figure} [ht]% normalmente utilizar [!t]
+	\centering
+	\includegraphics[width=0.8\textwidth]{./figuras/BSN-resultados-medios-all.png} % <- formatos PNG, JPG e PDF
+	\caption[Melhoria de custo x tamanho de rede]{Gráfico percentual comparativo de resultados médios de melhoria de custo total entre redes de diferentes tamanhos.}
+	\label{fig_graph_bsn_medio_all}
+\end{figure}
+
+\subsection{Melhoria de custo Individual}
+\label{melhoria-custo-individual}
+O BSN foi desenvolvido para redução de latência através da minimização do número de saltos considerando toda a rede avaliada, mas conforme explicitado em \ref{subsection-custo-da-rede}, além de significativa melhora no custo total da rede, o BSN também apresenta um ótimo resultado ao avaliar-se o custo individual para comunicação entre o nó central e cada um dos demais. De maneira geral, o algoritmo pode ser aplicado para diferentes objetivos de acordo com a função de \emph{fitness} utilizada, sendo que no presente caso esse valor é calculado conforme apresentado na Equação \ref{eq-fitness}.
+
+Dessa maneira, mudando o enfoque utilizado em \ref{melhoria-custo-total} para a análise dos resultados e avaliando os custos unitários de cada rota pode-se obter o gráfico apresentado na Figura \ref{fig_graph_melhoria_por_custo}.
+
+\begin{figure} [ht]% normalmente utilizar [!t]
+	\centering
+	\includegraphics[width=1\textwidth]{./figuras/Melhoria-por-custo.png} % <- formatos PNG, JPG e PDF
+	\caption[Custo antes e depois do BSN]{Gráfico comparativo de resultados médios de melhoria de custo individual para cada rota.}
+	\label{fig_graph_melhoria_por_custo}
+\end{figure}
+
+Para a geração da Figura \ref{fig_graph_melhoria_por_custo} foram consideradas todas as redes geradas pelo programa de simulação para abastecer o BSN conforme descrito em \ref{melhoria-custo-total}. Cada uma das conexões (ramos do grafo que realizam a interconexão entre o vértice origem e cada um dos destinos) de cada uma das redes foi avaliada e catalogada segundo seu custo, considerado neste documento como sendo igual ao número de saltos, conforme mostrado na Figura \ref{fig_graph_ramos_custo}. Após este passo, o custo resultante para cada um dos destinos dessas conexões, após a otimização do BSN, foi avaliado. Dessa forma é possível saber a performance do BSN através da comparação de todos os destinos cujos custos no grafo da rede original eram de 1, 2, 3 e assim por diante frente aos novos custos obtidos nas redes resultantes após a aplicação do BSN.
+
+\begin{figure} [ht]% normalmente utilizar [!t]
+	\centering
+	\includegraphics[width=1\textwidth]{./figuras/ramos-custo.png} % <- formatos PNG, JPG e PDF
+	\caption[Ramos x Custo]{Gráfico ilustrativo da quantidade de ramos gerados considerando todas as redes utilizadas com relação ao custo de cada um deles.}
+	\label{fig_graph_ramos_custo}
+\end{figure}
+
+Seguindo esta premissa, na Figura \ref{fig_graph_melhoria_por_custo}, as barras denominadas de ``Custo original'' representam o custo dos ramos do grafo avaliados antes da utilização do BSN, enquanto as barras denominadas de ``Custo médio final'' representam a média de todos os custos resultantes após a utilização do BSN. Pode-se notar que para custos muito baixos o BSN, de modo geral, pode apresentar um resultado pior do que o da rede original, mas essa situação muda drasticamente para custos maiores, na verdade à partir de 3 saltos entre origem e destino o BSN passa a resultar em vantagem quando comparado à rede original.
+
+As redes geradas pelo software de simulação utilizado neste documento foram construídas à partir da geração aleatória de grafos seguindo a distribuição de probabilidades de conexão mostrada na Figura \ref{fig_dist_prob}. Foram geradas redes de 5 a 100 nós, resultando em grafos cujo número de saltos máximo foi de 24, como pode-se verificar na Figura \ref{fig_graph_melhoria_por_custo}, sendo que para este número de saltos conseguiu-se uma melhoria média de cerca de 30\%.
+
+A Figura \ref{fig_graph_melhoria_por_custo} conta também com duas linhas de tendência lineares simbolizando a evolução do custo em uma rede comum (sem a utilização do BSN), representada pela linha ``Linear (Custo original)'' e em uma rede após a utilização do BSN, representada pela linha ``Linear (Custo médio final)''. As equações de reta de cada uma das linhas de tendência estão presentes na Figura \ref{fig_graph_melhoria_por_custo} e são novamente representadas por conveniência nas Equações \ref{eq-reta}, representando a evolução do custo em uma rede sem a utilização do BSN frente ao aumento do número de saltos, e \ref{eq-reta-bsn}, representando a evolução do custo em uma rede após a utilização do BSN frente ao aumento do número de saltos na topologia original.
+
+\begin{equation}
+y = x
+\label{eq-reta}
+\end{equation}
+
+\begin{equation}
+y = 0,7222x + 0,918
+\label{eq-reta-bsn}
+\end{equation}
+
+\begin{equation}
+\alpha = \tan ^{-1}(a)\therefore \alpha =\tan ^{-1}(0,7222)\approx 35,84^{\circ}
+\label{eq-coeficiente-angular}
+\end{equation}
+
+Substituindo-se \ref{eq-reta} em \ref{eq-reta-bsn} tem-se que o ponto de encontro das duas retas é em 3,3 representando o ponto de inflexão na utilização do protocolo. Ou seja, conforme já mencionado, à partir de 3 saltos de custo o BSN começa a fornecer resultados mais vantajosos do que os obtidos na rede original. Além disso, pode-se utilizar a Equação \ref{eq-reta-bsn} para prever o custo médio alcançado em ramos de rede mais compridos que os avaliados, visto que o coeficiente angular desta reta representa um ângulo menor que 45 graus conforme representado na Equação \ref{eq-coeficiente-angular}, pode-se perceber que o custo alcançado através da utilização do BSN tende a ser sempre e cada vez menor com relação ao custo da rede original. A mesma conclusão é obtida através da análise da Figura \ref{fig_graph_melhoria_por_custo}.
+
+\subsection{Limitações}
+O protocolo aqui apresentado tem o caráter de prova de conceito, sendo desta forma passível de aperfeiçoamentos. Em outras palavras existem limitações que, se resolvidas devem fazer com que o protocolo apresente resultados ainda melhores do mostrados. As limitações aqui discutidas são decorrentes do cenário de aplicação considerado, sendo que desta forma não estão ligadas diretamente com a proposta apresentada mas sim com os resultados obtidos.
+
+O perfil de rede de comunicação considerado na presente proposta costuma ser instalado em ambientes físicos não favoráveis a manutenção (equipamentos no alto de poste sem sistema de ventilação e costumeiramente expostos à intempéries). Somando-se a isso o fato de que possíveis problemas técnicos relacionados com a infraestrutura deste tipo de redes pode acarretar em grandes prejuízos monetários resulta-se em administradores de rede extremamente conservadores com relação à manutenções e/ou pontos de falha. Desta forma, previu-se a utilização de apenas um chaveador óptico por equipamento, o que em si não acarreta maiores problemas visto que de acordo com a distribuição de probabilidades de interconexão utilizada (Figura \ref{fig_dist_prob}) 98\% dos equipamentos encontrados em campo devem ter a disponibilidade de no máximo 4 conexões ópticas. Logo, caso um destes equipamentos tivesse mais de um chaveador óptico acionado ao mesmo tempo ele perderia a conexão com a rede, sendo impossível acessá-lo novamente. A Figura \ref{fig_2optsw} representa este estado.
+
+\begin{figure}[t!]
+	\centering
+	\begin{subfigure}[t]{0.4\textwidth}
+		\centering
+		\includegraphics[height=7cm]{./figuras/2-opt-sw-off.png} % <- formatos PNG, JPG e PDF
+		\caption{2 chaveadores desligados}
+		\label{fig_2optsw_off}
+	\end{subfigure}%
+	~
+	\begin{subfigure}[t]{0.4\textwidth}
+		\centering
+		\includegraphics[height=7cm]{./figuras/2-opt-sw-on.png} % <- formatos PNG, JPG e PDF
+	\caption{2 chaveadores ligados}
+	\label{fig_2optsw_on}
+	\end{subfigure}
+	\caption[Multiplicidade de chaveadores ópticos]{Representação da utilização de mais de um chaveador óptico em equipamentos contando com apenas 4 portas ópticas. Em \ref{fig_2optsw_off} pode-se ver que o sinal de todas as fibras é encaminhado para o equipamento normalmente, em contrapartida na situação retratada em \ref{fig_2optsw_on} todos os sinais de entrada são redirecionados impedindo que o equipamento receba qualquer informação.}
+	\label{fig_2optsw}
+\end{figure}
+
+Neste sentido, ao mesmo tempo que a utilização de apenas um chaveador óptico representa o estilo conservador marcante no cenário utilizado, também configura uma limitação na utilização do protocolo visto que para cada equipamento em campo existe apenas uma opção de acionamento de chaveador óptico, reduzindo assim pela metade o universo de possíveis novas topologias a serem formadas pelo BSN.
+
+Além disso, outra importante limitação advinda da utilização de apenas um chaveador óptico é a obrigatoriedade de interconectar, quando necessário, sempre as mesmas portas ópticas. O que também provoca a mesma limitação citada de diminuir o universo de possíveis novas topologias.
