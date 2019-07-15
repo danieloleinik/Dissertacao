@@ -26,6 +26,7 @@
 \usepackage{subcaption}
 \usepackage{algpseudocode}
 \usepackage[Algoritmo]{algorithm}
+\usepackage{amsmath}
 
 \algnewcommand\algorithmicforeach{\textbf{for each}}
 \algdef{S}[FOR]{ForEach}[1]{\algorithmicforeach\ #1\ \algorithmicdo}
@@ -42,7 +43,7 @@
 \nivel{Mestrado}
 \titulacao{Mestre}
 
-\titulo{{Título em português}} % titulo do trabalho em portugues
+\titulo{{BSN - utilizando alterações em camada física para otimização de redes ópticas através de componentes passivos}} % titulo do trabalho em portugues
 \title{\MakeUppercase{Title in English}} % titulo do trabalho em ingles
 
 \autor{Daniel Alexandre Oleinik} % autor do trabalho
@@ -123,9 +124,9 @@ a smart reactive management.
 % listas (opcionais, mas recomenda-se a partir de 5 elementos)
 \listadefiguras % geracao automatica da lista de figuras
 \listadetabelas % geracao automatica da lista de tabelas
-\listadequadros % adivinhe :)
+%\listadequadros % adivinhe :)
 \listadesiglas % geracao automatica da lista de siglas
-\listadesimbolos % geracao automatica da lista de simbolos
+%\listadesimbolos % geracao automatica da lista de simbolos
 
 % sumario
 \sumario % geracao automatica do sumario
@@ -140,6 +141,7 @@ a smart reactive management.
 
 
 \setcounter{page}{12}
+\setcounter{table}{0} \renewcommand{\thetable}{\arabic{table}}
 
 %---------- Primeiro Capitulo ----------
 \input{introducao.tex}
@@ -150,6 +152,9 @@ a smart reactive management.
 
 %---------- Terceiro Capitulo ----------
 \input {Proposta.tex}
+
+%---------- Terceiro Capitulo ----------
+\input {Conclusao.tex}
 
 %\chapter{Desenvolvimento}
 %\label{chap:desenv}
@@ -211,7 +216,7 @@ a smart reactive management.
 
 
 %---------- Terceiro Capitulo ----------
-\chapter{Conclus\~ao}
+%\chapter{Conclus\~ao}
 
 %Espera-se que o uso do estilo de formata\c{c}\~ao \LaTeX\ adequado \`as Normas para Elabora\c{c}\~ao de Trabalhos Acad\^emicos da UTFPR ({\ttfamily normas-utf-tex.cls}) facilite a escrita de documentos no \^ambito desta institui\c{c}\~ao e aumente a produtividade de seus autores. Para usu\'arios iniciantes em \LaTeX, al\'em da bibliografia especializada j\'a citada, existe ainda uma s\'erie de recursos~\cite{CTAN2009} e fontes de informa\c{c}\~ao~\cite{TeX-Br2009,Wikibooks2009} dispon\'iveis na Internet.
 %
